@@ -54,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             Navigator.pushNamed(context, '/scanKeranjang');
           },
+          child: Text("Scan Keranjang"),
         ),
         /*
         child: Column(
