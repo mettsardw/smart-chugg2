@@ -12,13 +12,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) =>MyApp(),
+        '/': (context) =>MyHomePage(),
         '/listBarang':(context) =>ListBarang(),
         '/scanKeranjang':(context) => ScanKeranjang(),
         '/checkout':(context) =>Checkout(),
         '/thankyou':(context) =>Thankyou()
       },
-      title: 'Flutter Demo',
+      title: "Flutter Demo",
       theme: ThemeData(
         primarySwatch: Colors.lime,
       ),
@@ -26,36 +26,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/scanKeranjang');
-          },
-          child: Text("Scan Keranjang"),
-        ),
+
+      body:Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 100.0),
+                child: Text("Yuk Belanja!"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/scanKeranjang');
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Scan Keranjang"),
+                )
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 50.0, 0, 0),
+                child: Text("Terms & Conditions"),
+              )
+          ],
+        )
         /*
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
