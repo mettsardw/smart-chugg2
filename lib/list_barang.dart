@@ -23,7 +23,29 @@ class _ListBarangState extends State<ListBarang> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Keranjang Belanja")
+        title: Text("Keranjang Belanja"),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: PopupMenuButton(
+              offset: Offset.fromDirection(-100,4000000000000000.0),
+              elevation: 4.0,
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<Text>>[
+                  const PopupMenuItem<Text>(
+                    value: Text('1'),
+                    child: Text('Working a lot harder'),
+                  ),
+                  const PopupMenuItem<Text>(
+                    value: Text('2'),
+                    child: Text('Terms and Conditions'),
+                  )
+                ];
+              },
+            )
+          ),
+        ],
       ),
       body: Center(
         child: ListView.builder(
@@ -38,14 +60,40 @@ class _ListBarangState extends State<ListBarang> {
           },
         )
       ),
-      bottomNavigationBar: BarBawah(_subtotal),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 0.0,
+        icon: const Icon(Icons.add),
+        label: const Text('Add a task'),
         onPressed: _tambahBarang,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
+      floatingActionButtonLocation: 
+        FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: BarBawah(_subtotal),
     );
   }
+}
+
+class BarCheckout extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          child: RaisedButton(
+          onPressed: () {
+              Navigator.pushNamed(context, '/checkout');
+            },
+            child: Text("Checkout"),
+          ),
+          padding: EdgeInsets.all(8.0),
+        ),
+      ],
+    );
+  }
+
 }
 
 class BarBawah extends StatelessWidget {
@@ -53,6 +101,7 @@ class BarBawah extends StatelessWidget {
   BarBawah(int _subtotal){
     this._subtotal=_subtotal;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +123,44 @@ class BarBawah extends StatelessWidget {
             ),
             padding: EdgeInsets.all(8.0),
           ),
-          /*
-          IconButton(
-            icon: Icon(Icons.chevron_right),
-            onPressed: () {
-              Navigator.pushNamed(context, '/checkout');
-            },
-          )
-          */
         ],
       ),
     );
   }
+  /*
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      child: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                child: Text("Subtotal: "),
+                padding: EdgeInsets.all(8.0),
+              ),
+              Padding(
+                child: Text(_subtotal.toString()),
+                padding: EdgeInsets.all(8.0),
+              ),
+              /*Padding(
+                child: RaisedButton(
+                onPressed: () {
+                    Navigator.pushNamed(context, '/checkout');
+                  },
+                  child: Text("Checkout"),
+                ),
+                padding: EdgeInsets.all(8.0),
+              ),*/
+            ],
+          ),
+          BarCheckout(),
+        ]
+      ),
+    );
+  }
+  */
 }
