@@ -37,9 +37,32 @@ class _ListBarangState extends State<ListBarang> {
                     value: Text('1'),
                     child: Text('Working a lot harder'),
                   ),
-                  const PopupMenuItem<Text>(
+                  PopupMenuItem<Text>(
                     value: Text('2'),
-                    child: Text('Terms and Conditions'),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/scanKeranjang');
+                      },
+                      child: Text('Change Cart')
+                      ),
+                  ),
+                  PopupMenuItem<Text>(
+                    value: Text('3'),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/tNC');
+                      },
+                      child: Text('Terms & Conditions')
+                      ),
+                  ),
+                  PopupMenuItem<Text>(
+                    value: Text('4'),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/pP');
+                      },
+                      child: Text('Privacy Policy')
+                      ),
                   )
                 ];
               },
@@ -102,9 +125,33 @@ class BarBawah extends StatelessWidget {
     this._subtotal=_subtotal;
   }
 
-
   @override
   Widget build(BuildContext context) {
+    void _alertYakinCheckout(){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Checkout"),
+            content: new Text("Are you sure you want to finalize purchase?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new FlatButton(
+                child: new Text("Yes"),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/checkout');
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     return BottomAppBar(
       child: new Row(
         mainAxisSize: MainAxisSize.max,
@@ -115,10 +162,8 @@ class BarBawah extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
           ),
           Padding(
-            child: RaisedButton(
-            onPressed: () {
-                Navigator.pushNamed(context, '/checkout');
-              },
+              child: RaisedButton(
+              onPressed: _alertYakinCheckout,
               child: Text("Checkout"),
             ),
             padding: EdgeInsets.all(8.0),
@@ -128,6 +173,7 @@ class BarBawah extends StatelessWidget {
     );
   }
   /*
+  //menu checkout 2 baris
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
