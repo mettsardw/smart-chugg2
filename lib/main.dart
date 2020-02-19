@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webapp_super/checkout.dart';
 import 'package:webapp_super/list_barang.dart';
+import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
+import 'package:webapp_super/terms_and_conditions.dart';
 import 'package:webapp_super/thankyou.dart';
 
 void main() => runApp(MyApp());
@@ -16,7 +18,9 @@ class MyApp extends StatelessWidget {
         '/listBarang':(context) =>ListBarang(),
         '/scanKeranjang':(context) => ScanKeranjang(),
         '/checkout':(context) =>Checkout(),
-        '/thankyou':(context) =>Thankyou()
+        '/thankyou':(context) =>Thankyou(),
+        '/tNC':(context) => TermsAndConditions(),
+        '/pP':(context) => PrivacyPolicy(),
       },
       title: "Flutter Demo",
       theme: ThemeData(

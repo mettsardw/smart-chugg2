@@ -35,7 +35,7 @@ class _ListBarangState extends State<ListBarang> {
                 return <PopupMenuEntry<Text>>[
                   const PopupMenuItem<Text>(
                     value: Text('1'),
-                    child: Text('Working a lot harder'),
+                    child: Text('Remove an item'),
                   ),
                   PopupMenuItem<Text>(
                     value: Text('2'),

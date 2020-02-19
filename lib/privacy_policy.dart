@@ -1,32 +1,27 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Checkout extends StatelessWidget {
+class PrivacyPolicy extends StatelessWidget {
   //kasih listener untuk ganti screen setelah OTP diterima
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Checkout")
+        title: Text("Privacy Policy")
       ),
       body: Center(
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-            Text(
-                "Your Subtotal is:",
-            ),
             SizedBox(height: 20),
             Text(
-                "190202",
+                "Privacy Policy",
             ),
+            SizedBox(height: 20),
             Divider(
                 color: Colors.black,
             ),
             SizedBox(height: 50),
-            Text("OTP HERE"),
+            Text("fskfhsjdhfkjshdjkfhkshdfhkhasjhfiaushfi"),
           ],
         ),
       )
