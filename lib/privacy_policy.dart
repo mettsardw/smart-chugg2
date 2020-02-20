@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PrivacyPolicy extends StatelessWidget {
+  static const routeName = '/pP';
   //kasih listener untuk ganti screen setelah OTP diterima
   @override
   Widget build(BuildContext context) {

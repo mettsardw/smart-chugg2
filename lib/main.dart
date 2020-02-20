@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:webapp_super/args.dart';
+import 'package:webapp_super/boarding.dart';
 import 'package:webapp_super/checkout.dart';
+import 'package:webapp_super/extract_subtotal_args.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
@@ -12,78 +15,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: (settings){
+        if(settings.name==Checkout.routeName){
+          final Args args = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context){
+                return Checkout(
+                  subtotal: args.subtotal,
+                );
+              }
+          );
+        }
+        return MaterialPageRoute(
+          builder: (context){
+              return Checkout(
+                subtotal: 0,
+              );
+            }
+        );
+      },
       initialRoute: '/',
       routes: {
-        '/': (context) =>MyHomePage(),
-        '/listBarang':(context) =>ListBarang(),
+        '/': (context) =>Boarding(),
         '/scanKeranjang':(context) => ScanKeranjang(),
-        '/checkout':(context) =>Checkout(),
+        //Checkout.routeName:(context) =>Checkout(), //checkout page di OnGenerateRoute
         '/thankyou':(context) =>Thankyou(),
-        '/tNC':(context) => TermsAndConditions(),
-        '/pP':(context) => PrivacyPolicy(),
+        TermsAndConditions.routeName:(context) => TermsAndConditions(),
+        PrivacyPolicy.routeName:(context) => PrivacyPolicy(),
+        ListBarang.routeName:(context) => ListBarang(),
       },
       title: "Flutter Demo",
       theme: ThemeData(
         primarySwatch: Colors.lime,
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-
-      body:Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Image.asset('assets/images/logo.png',height: 100),
-              ),
-              SizedBox(height:20),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                child: Text('smart shopping assistant'),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/scanKeranjang');
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text("Scan Keranjang"),
-                )
-              ),
-              SizedBox(height: 200),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                  icon: Icon(Icons.help_outline),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/listBarang');
-                  },
-                ),
-              )
-          ],
-        )
-        /*
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-        */
       ),
     );
   }
