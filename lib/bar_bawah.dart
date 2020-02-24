@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:webapp_super/args.dart';
 
 import 'checkout.dart';
@@ -43,8 +44,14 @@ class BarBawah extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            child: Text("Subtotal: "+_subtotal.toString()),
-            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Subtotal: "+_subtotal.toString(),
+              style: GoogleFonts.lato(
+                textStyle: Theme.of(context).textTheme.subhead,
+                fontWeight: FontWeight.w600,
+              ),
+              ),
+            padding: EdgeInsets.all(12.0),
           ),
           Padding(
               child: RaisedButton(

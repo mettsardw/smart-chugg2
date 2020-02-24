@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:webapp_super/bar_bawah.dart';
+import 'package:webapp_super/privacy_policy.dart';
+import 'package:webapp_super/scan_keranjang.dart';
+import 'package:webapp_super/terms_and_conditions.dart';
 
 class ListBarang extends StatefulWidget {
   static const routeName = '/listBarang';
@@ -35,15 +39,22 @@ class _ListBarangState extends State<ListBarang> {
               icon: Icon(Icons.more_vert),
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<Text>>[
-                  const PopupMenuItem<Text>(
+                  PopupMenuItem<Text>(
                     value: Text('1'),
-                    child: Text('Remove an item'),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, ScanKeranjang.routeName);
+                      },
+                      child: Text(
+                        'Remove Item',
+                      ),
+                      ),
                   ),
                   PopupMenuItem<Text>(
                     value: Text('2'),
                     child: FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/scanKeranjang');
+                        Navigator.pushNamed(context, ScanKeranjang.routeName);
                       },
                       child: Text('Change Cart')
                       ),
@@ -52,7 +63,7 @@ class _ListBarangState extends State<ListBarang> {
                     value: Text('3'),
                     child: FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/tNC');
+                        Navigator.pushNamed(context, TermsAndConditions.routeName);
                       },
                       child: Text('Terms & Conditions')
                       ),
@@ -61,7 +72,7 @@ class _ListBarangState extends State<ListBarang> {
                     value: Text('4'),
                     child: FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/pP');
+                        Navigator.pushNamed(context, PrivacyPolicy.routeName);
                       },
                       child: Text('Privacy Policy')
                       ),
@@ -73,7 +84,8 @@ class _ListBarangState extends State<ListBarang> {
         ],
       ),
       body: Center(
-        child: ListView.builder(
+        child: ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
           itemCount: _dataBarang.length,
           itemBuilder: (context, int i){
             return new ListTile(

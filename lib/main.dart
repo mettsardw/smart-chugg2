@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:webapp_super/args.dart';
 import 'package:webapp_super/boarding.dart';
 import 'package:webapp_super/checkout.dart';
-import 'package:webapp_super/extract_subtotal_args.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) =>Boarding(),
-        '/scanKeranjang':(context) => ScanKeranjang(),
+        ScanKeranjang.routeName:(context) => ScanKeranjang(),
         //Checkout.routeName:(context) =>Checkout(), //checkout page di OnGenerateRoute
-        '/thankyou':(context) =>Thankyou(),
+        Thankyou.routeName:(context) =>Thankyou(),
         TermsAndConditions.routeName:(context) => TermsAndConditions(),
         PrivacyPolicy.routeName:(context) => PrivacyPolicy(),
         ListBarang.routeName:(context) => ListBarang(),
@@ -44,6 +44,9 @@ class MyApp extends StatelessWidget {
       title: "Flutter Demo",
       theme: ThemeData(
         primarySwatch: Colors.lime,
+        textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
     );
   }

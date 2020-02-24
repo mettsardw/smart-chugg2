@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:webapp_super/scan_keranjang.dart';
 
 class Boarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body:Center(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Image.asset('assets/images/logo.png',height: 100),
-              ),
+              SizedBox(height:150),
+              Image.asset('assets/images/logo.png',height: 100),
               SizedBox(height:20),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                child: Text('smart shopping assistant'),
+              Text(
+                'smart shopping assistant',
+                style: GoogleFonts.lato(
+                  textStyle: Theme.of(context).textTheme.body2,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              SizedBox(height: 100),
               RaisedButton(
+                child: Text("Scan Keranjang"),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/scanKeranjang');
+                  Navigator.pushNamed(context, ScanKeranjang.routeName);
                 },
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text("Scan Keranjang"),
-                )
               ),
-              SizedBox(height: 200),
+              SizedBox(height: 180),
               Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(
