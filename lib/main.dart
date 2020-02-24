@@ -19,18 +19,15 @@ class MyApp extends StatelessWidget {
         if(settings.name==Checkout.routeName){
           final Args args = settings.arguments;
           return MaterialPageRoute(
-            builder: (context){
-                return Checkout(
-                  subtotal: args.subtotal,
-                );
-              }
+            builder: (context) => Checkout(),
+            settings: RouteSettings(
+              arguments: args,
+            ),
           );
         }
         return MaterialPageRoute(
           builder: (context){
-              return Checkout(
-                subtotal: 0,
-              );
+              return Checkout();
             }
         );
       },

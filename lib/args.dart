@@ -1,5 +1,5 @@
 class Args{
-  int subtotal;
+  final int subtotal;
 
   Args(this.subtotal);
 }

@@ -3,16 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
 
 class Checkout extends StatelessWidget {
-  static const routeName = '/checkout';
-  final int subtotal;
+  static const routeName = '/checkout'; 
   // This Widget accepts the arguments as constructor parameters. It does not
   // extract the arguments from the ModalRoute.
-  // The arguments are extracted by the onGenerateRoute function provided to the
-  // MaterialApp widget.
-  const Checkout({
-    Key key,
-    @required this.subtotal,
-  }) : super(key: key);
   //kasih listener untuk ganti screen setelah OTP diterima
   @override
   Widget build(BuildContext context) {
