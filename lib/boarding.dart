@@ -5,7 +5,21 @@ import 'package:webapp_super/scan_keranjang.dart';
 class Boarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0,0.7,1],
+          colors: [
+            Colors.white,
+            Colors.white,
+            Colors.lime
+          ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
       body:Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -23,7 +37,17 @@ class Boarding extends StatelessWidget {
               ),
               SizedBox(height: 100),
               RaisedButton(
-                child: Text("Scan Keranjang"),
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.lime,
+                  ),
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Scan Keranjang',
+                    style: Theme.of(context).textTheme.subhead.apply(color: Colors.white,fontWeightDelta: 20),
+                  ),
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, ScanKeranjang.routeName);
                 },
@@ -55,6 +79,7 @@ class Boarding extends StatelessWidget {
         ),
         */
       ),
+    ),
     );
   }
 }
