@@ -55,9 +55,19 @@ class BarBawah extends StatelessWidget {
           ),
           Padding(
               child: RaisedButton(
-              onPressed: _alertYakinCheckout,
-              child: Text("Checkout"),
-            ),
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.lime,
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Checkout',
+                    style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 10),
+                  ),
+                ),
+                onPressed: _alertYakinCheckout,
+              ),
             padding: EdgeInsets.all(8.0),
           ),
         ],

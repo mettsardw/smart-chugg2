@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 
 class Boarding extends StatelessWidget {
@@ -58,7 +59,7 @@ class Boarding extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.help_outline),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/listBarang');
+                    Navigator.pushNamed(context, ListBarang.routeName);
                   },
                 ),
               )
