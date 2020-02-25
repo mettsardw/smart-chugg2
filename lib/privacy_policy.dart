@@ -9,7 +9,7 @@ class PrivacyPolicy extends StatelessWidget {
       appBar: AppBar(
         title: Text("Privacy Policy")
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -22,7 +22,7 @@ class PrivacyPolicy extends StatelessWidget {
                 color: Colors.black,
             ),
             SizedBox(height: 50),
-            Text("fskfhsjdhfkjshdjkfhkshdfhkhasjhfiaushfi"),
+            Text("fskfhsjdhfkjshdjkfhkshdfhkhasjhfiaushfi",style: Theme.of(context).textTheme.display4,),
           ],
         ),
       )
