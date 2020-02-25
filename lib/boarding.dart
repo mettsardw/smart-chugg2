@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 
@@ -30,11 +29,13 @@ class Boarding extends StatelessWidget {
               SizedBox(height:20),
               Text(
                 'smart shopping assistant',
-                style: GoogleFonts.lato(
+                style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 20,fontWeightDelta: 20),
+                /*
+                 GoogleFonts.lato(
                   textStyle: Theme.of(context).textTheme.body2,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                  fontWeight: FontWeight.bold,),
+                */
               ),
               SizedBox(height: 100),
               RaisedButton(
