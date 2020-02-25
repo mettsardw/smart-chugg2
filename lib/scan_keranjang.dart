@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ScanKeranjang extends StatelessWidget {
+  static const routeName = '/scanKeranjang';
   @override
   Widget build(BuildContext context) {
     var scaffold = Scaffold(
