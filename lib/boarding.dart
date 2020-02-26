@@ -29,7 +29,7 @@ class Boarding extends StatelessWidget {
               SizedBox(height:20),
               Text(
                 'smart shopping assistant',
-                style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 20,fontWeightDelta: 20),
+                style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5,fontWeightDelta: 20),
                 /*
                  GoogleFonts.lato(
                   textStyle: Theme.of(context).textTheme.body2,

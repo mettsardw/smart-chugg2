@@ -38,16 +38,44 @@ class _ListBarangState extends State<ListBarang> {
       */
     });
   }
-
+  bool _alertDeleteBarang(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Are you sure you want to delete?"),
+            content: new Text("Quantity will decrease and you have to remove item from cart."),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("YES"),
+                onPressed: () {
+                  return true;
+                },
+              ),
+              new FlatButton(
+                child: new Text("NO"),
+                onPressed: () {
+                  return false;
+                },
+              ),
+            ],
+          );
+        },
+      );
+    return true;
+  }
   void _deleteBarang(int idx) {
-    if(_barangs[idx].qty==1){
-      setState(() {
-        _barangs.removeAt(idx);
-      });
-    }else{
-      setState(() {
-        _barangs[idx].removeBarang();
-      });
+    //TODO: gimana caranya supaya bisa dialog boxnya jalan?
+    if(_alertDeleteBarang()==true){
+      if(_barangs[idx].qty==1){
+        setState(() {
+          _barangs.removeAt(idx);
+        });
+      }else{
+        setState(() {
+          _barangs[idx].removeBarang();
+        });
+      }
     }
     _subtotal = _subtotalBaru();
   }
@@ -120,7 +148,10 @@ class _ListBarangState extends State<ListBarang> {
               //leading: FlutterLogo(size: 56.0),
               title: Text(_barangs[i].nama),
               subtitle: Text(_barangs[i].infoPrice()),
-              trailing: Icon(Icons.more_vert)
+              trailing: IconButton(
+                icon: Icon(Icons.delete_outline),
+                onPressed: () => _deleteBarang(i),
+              ),
             );
           },
         )
