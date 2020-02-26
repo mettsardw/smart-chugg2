@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webapp_super/bar_bawah.dart';
+import 'package:webapp_super/barang.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 import 'package:webapp_super/terms_and_conditions.dart';
@@ -12,20 +13,48 @@ class ListBarang extends StatefulWidget {
 
 class _ListBarangState extends State<ListBarang> {
   int _counter = 2;
-  List<String> _dataBarang = ["ASH","BIBI"];
-  List<int> _dataPrice = [1000,2999];
+  List<Barang> _barangs = [new Barang(1,"IyemIyem", 1, 2000)];
   int _subtotal = 3999;
+  int _subtotalBaru(){
+    int tot = _barangs.length;
+    int temp = 0;
+    for (var i = 0; i < tot; i++) {
+      temp += _barangs[i].getPrice();
+    }
+    return temp;
+  }
   void _tambahBarang() {
     setState(() {
+      //fetch new barang item
+      int idx = _barangs.length;
+      Barang baru = new Barang(idx+1, "Iyem-"+idx.toString(), 1, idx*1010);
+      _barangs.add(baru);
+      _subtotal = _subtotalBaru();
+      /*
       _counter++;
       _dataBarang.add(_counter.toString());
       _dataPrice.add((_counter*1000));
       _subtotal+=(_counter*1000);
+      */
     });
+  }
+
+  void _deleteBarang(int idx) {
+    if(_barangs[idx].qty==1){
+      setState(() {
+        _barangs.removeAt(idx);
+      });
+    }else{
+      setState(() {
+        _barangs[idx].removeBarang();
+      });
+    }
+    _subtotal = _subtotalBaru();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Keranjang Belanja"),
@@ -85,12 +114,12 @@ class _ListBarangState extends State<ListBarang> {
       body: Center(
         child: ListView.separated(
           separatorBuilder: (context, index) => Divider(),
-          itemCount: _dataBarang.length,
+          itemCount: _barangs.length,
           itemBuilder: (context, int i){
             return new ListTile(
               //leading: FlutterLogo(size: 56.0),
-              title: Text(_dataBarang[i]),
-              subtitle: Text(_dataPrice[i].toString()),
+              title: Text(_barangs[i].nama),
+              subtitle: Text(_barangs[i].infoPrice()),
               trailing: Icon(Icons.more_vert)
             );
           },
@@ -99,7 +128,7 @@ class _ListBarangState extends State<ListBarang> {
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0.0,
         icon: const Icon(Icons.add),
-        label: const Text('Add a task'),
+        label: const Text('Add item'),
         onPressed: _tambahBarang,
         tooltip: 'Increment',
       ),
