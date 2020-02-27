@@ -12,7 +12,7 @@ class ListBarang extends StatefulWidget {
 }
 
 class _ListBarangState extends State<ListBarang> {
-  int _counter = 2;
+  //bikin method instantiate barang
   List<Barang> _barangs = [new Barang(1,"IyemIyem", 1, 2000)];
   int _subtotal = 3999;
   int _subtotalBaru(){
@@ -26,9 +26,21 @@ class _ListBarangState extends State<ListBarang> {
   void _tambahBarang() {
     setState(() {
       //fetch new barang item
-      int idx = _barangs.length;
+      int idx = _barangs.length; //TODO: override isi ID by barang length
       Barang baru = new Barang(idx+1, "Iyem-"+idx.toString(), 1, idx*1010);
-      _barangs.add(baru);
+      bool isExistID = false;
+      for (var _barang in _barangs) {
+        if (baru.id==_barang.id) {
+          isExistID = true;
+          if (isExistID) {
+            _barang.addQty();
+          }
+          break;
+        }
+      }
+      if (!isExistID) {
+        _barangs.add(baru);
+      }
       _subtotal = _subtotalBaru();
       /*
       _counter++;
@@ -38,7 +50,8 @@ class _ListBarangState extends State<ListBarang> {
       */
     });
   }
-  bool _alertDeleteBarang(){
+  bool _alertDeleteBarang(int idx){
+    bool flag=false;
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -49,24 +62,24 @@ class _ListBarangState extends State<ListBarang> {
               new FlatButton(
                 child: new Text("YES"),
                 onPressed: () {
-                  return true;
+                  _deleteBarang(idx);
                 },
               ),
               new FlatButton(
                 child: new Text("NO"),
                 onPressed: () {
-                  return false;
+                  Navigator.pop(context);
                 },
               ),
             ],
           );
         },
       );
-    return true;
+    return flag;
   }
   void _deleteBarang(int idx) {
     //TODO: gimana caranya supaya bisa dialog boxnya jalan?
-    if(_alertDeleteBarang()==true){
+    //if(_alertDeleteBarang()==true){
       if(_barangs[idx].qty==1){
         setState(() {
           _barangs.removeAt(idx);
@@ -76,7 +89,7 @@ class _ListBarangState extends State<ListBarang> {
           _barangs[idx].removeBarang();
         });
       }
-    }
+    //}
     _subtotal = _subtotalBaru();
   }
 
@@ -95,17 +108,6 @@ class _ListBarangState extends State<ListBarang> {
               icon: Icon(Icons.more_vert),
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<Text>>[
-                  PopupMenuItem<Text>(
-                    value: Text('1'),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, ScanKeranjang.routeName);
-                      },
-                      child: Text(
-                        'Remove Item',
-                      ),
-                      ),
-                  ),
                   PopupMenuItem<Text>(
                     value: Text('2'),
                     child: FlatButton(
@@ -149,8 +151,8 @@ class _ListBarangState extends State<ListBarang> {
               title: Text(_barangs[i].nama),
               subtitle: Text(_barangs[i].infoPrice()),
               trailing: IconButton(
-                icon: Icon(Icons.delete_outline),
-                onPressed: () => _deleteBarang(i),
+                icon: Icon(Icons.delete_outline,color: Colors.red,),
+                onPressed: () => _alertDeleteBarang(i),
               ),
             );
           },
