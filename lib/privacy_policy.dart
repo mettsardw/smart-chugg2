@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   static const routeName = '/pP';
@@ -32,7 +33,7 @@ class PrivacyPolicy extends StatelessWidget {
             Text("For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to Device ID, Camera Access. The information that I request will be retained on your device and is not collected by me in any way. \n The app does use third party services that may collect information used to identify you.\n",style: Theme.of(context).textTheme.body1),
             RichText(text: TextSpan(text:"Google Play Services",style: Theme.of(context).textTheme.body1,
                     recognizer: new TapGestureRecognizer()
-                      ..onTap = () { UrlLauncher.launch('https://www.google.com/policies/privacy/');
+                      ..onTap = () { launch('https://www.google.com/policies/privacy/');
                       }
                     )
                   ),
