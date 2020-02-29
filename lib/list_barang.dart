@@ -60,14 +60,16 @@ class _ListBarangState extends State<ListBarang> {
             content: new Text("Quantity will decrease and you have to remove item from cart."),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("YES"),
+                child: new Text("No"),
                 onPressed: () {
                   _deleteBarang(idx);
+                  Navigator.pop(context);
                 },
               ),
               new FlatButton(
-                child: new Text("NO"),
+                child: new Text("Yes"),
                 onPressed: () {
+                  _deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
