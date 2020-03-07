@@ -27,6 +27,9 @@ import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
+import 'package:webapp_super/rest_client.dart';
 
 class ScanKeranjang extends StatefulWidget {
   static const routeName = '/scanKeranjang';
@@ -77,6 +80,7 @@ class _ScanState extends State<ScanKeranjang> {
   Future scan() async {
     try {
       String barcode = await BarcodeScanner.scan();
+      _cobaRest();
       setState(() => this.barcode = barcode
       //Navigator.pushNamed(context, '/listBarang');
       );
@@ -93,5 +97,13 @@ class _ScanState extends State<ScanKeranjang> {
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }
+  }
+
+  void _cobaRest(){
+    final logger = Logger();
+    final dio = Dio();
+    dio.options.headers["Demo-Header"] = "demo header";   // config your dio headers globally
+    final client = RestClient(dio);
+    client.getTasks().then((it) => logger.i(it));
   }
 }
