@@ -10,18 +10,14 @@ class SelfClient{
     cl = http.Client();
   }
   String _makeJSON(key,value){
-    String json = "{"+key.toString()+":"+value.toString()+"}";
+    String json = '{"'+key.toString()+'":"'+value.toString()+'"}';
     return json;
   }
-  
-  _decodeJson(body){
-    Map s = json.decode(body) as Map;
-    return s;
-    /*
-    for (var i = 0; i < s.length; i++) {
-      logger.i(s.keys.elementAt(i).toString()+":"+s.values.elementAt(i).toString());
-    }
-    */
+  postAfterScan(noID) async{
+    var body = _makeJSON("cartId", noID);
+    var svc = url+"getTransactionID";
+    print(body);
+    return await http.post(svc,headers: headers,body:body);
   }
 
   _postData(String suffix,String body) async{
@@ -41,9 +37,11 @@ class SelfClient{
     }
     
     //cl.close();
-    return response;
+    return m;
   }
   
   //list trsx
-  getTrID(noID) => _postData("getTransactionID",_makeJSON("cartId", noID));
+  getTrID(noID) {
+    return _postData("getTransactionID",_makeJSON("cartId", noID));
+  }
 }

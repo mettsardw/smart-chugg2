@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:webapp_super/self_client.dart';
 
 class ScanKeranjang extends StatefulWidget {
   static const routeName = '/scanKeranjang';
@@ -63,7 +64,7 @@ class _ScanState extends State<ScanKeranjang> {
                     color: Colors.blue,
                     textColor: Colors.white,
                     splashColor: Colors.blueGrey,
-                    onPressed: () => _fetchData(isLoad),
+                    onPressed: () => scan(isLoad),//_fetchData(isLoad),
                     child: const Text('START CAMERA SCAN')
                 ),
               )
@@ -81,11 +82,18 @@ class _ScanState extends State<ScanKeranjang> {
 
   Future scan(isLoad) async {
     try {
+      /*//TODO: coba build dulu
       String barcode = await BarcodeScanner.scan();
-      _fetchData(isLoad);
       setState(() => this.barcode = barcode
       //Navigator.pushNamed(context, '/listBarang');
       );
+      */
+      var dptCart = await _fetchData(isLoad/*TODO:,barcode*/);
+      if(dptCart=="ok"){
+        Navigator.pushNamed(context, '/listBarang');
+      }else{
+        //TODO: hit createTransactionID
+      }
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -101,31 +109,28 @@ class _ScanState extends State<ScanKeranjang> {
     }
   }
 
-  _fetchData(isLoad) async{
+  _fetchData(isLoad,{noID:1}) async{
       setState(() {
         isLoad=true;
       });
-      var response;
-      var url ="http://192.168.43.10:6969/getTransactionID";
-      Map<String,String> headers = {'Content-type':'application/json'};
-      String body='{"cartId":"1"}';
+      Map m;
+      var sc = SelfClient();
       try{
-        response = await http.post(url,headers: headers, body:body);
-        if (response.statusCode==200) {
-          Map s = json.decode(response.body) as Map;
-          setState(() {
-            isLoad=false;
-          });
-          final logger = Logger();
-          for (var i = 0; i < s.length; i++) {
-            logger.i(s.keys.elementAt(i).toString()+":"+s.values.elementAt(i).toString());
-          }
-        }else{
-          throw Exception('failed to show HAHAHAHAHA');
+        //var response = await sc.postAfterScan(noID);
+        //m = json.decode(response.body) as Map;
+        m = await sc.getTrID(noID);
+        setState(() {
+          isLoad=false;
+        });
+        if (m["status"].toString()=="ok") {
+          print(m["txnId"].toString());
+          //TODO: txnId masukin ke no.trx
+          return m["status"];
         }
-      }on Exception{
-        print(Exception().toString());
+      }catch(e){
+        print(e.toString());
+        print("Gak berhasil dapet trx ID");
       }
-      
+      return "aye";
     }
 }
