@@ -23,13 +23,13 @@ class ScanKeranjang extends StatelessWidget {
 */
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:webapp_super/rest_client.dart';
+import 'package:http/http.dart' as http;
 
 class ScanKeranjang extends StatefulWidget {
   static const routeName = '/scanKeranjang';
@@ -47,6 +47,7 @@ class _ScanState extends State<ScanKeranjang> {
 
   @override
   Widget build(BuildContext context) {
+    var isLoad = false;
     return Scaffold(
         appBar: new AppBar(
           title: new Text('Scan Keranjang Belanja'),
@@ -62,7 +63,7 @@ class _ScanState extends State<ScanKeranjang> {
                     color: Colors.blue,
                     textColor: Colors.white,
                     splashColor: Colors.blueGrey,
-                    onPressed: scan,
+                    onPressed: () => _fetchData(isLoad),
                     child: const Text('START CAMERA SCAN')
                 ),
               )
@@ -75,12 +76,13 @@ class _ScanState extends State<ScanKeranjang> {
             ],
           ),
         ));
+  
   }
 
-  Future scan() async {
+  Future scan(isLoad) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      _cobaRest();
+      _fetchData(isLoad);
       setState(() => this.barcode = barcode
       //Navigator.pushNamed(context, '/listBarang');
       );
@@ -99,11 +101,31 @@ class _ScanState extends State<ScanKeranjang> {
     }
   }
 
-  void _cobaRest(){
-    final logger = Logger();
-    final dio = Dio();
-    dio.options.headers["Demo-Header"] = "demo header";   // config your dio headers globally
-    final client = RestClient(dio);
-    client.getTasks().then((it) => logger.i(it));
-  }
+  _fetchData(isLoad) async{
+      setState(() {
+        isLoad=true;
+      });
+      var response;
+      var url ="http://192.168.43.10:6969/getTransactionID";
+      Map<String,String> headers = {'Content-type':'application/json'};
+      String body='{"cartId":"1"}';
+      try{
+        response = await http.post(url,headers: headers, body:body);
+        if (response.statusCode==200) {
+          Map s = json.decode(response.body) as Map;
+          setState(() {
+            isLoad=false;
+          });
+          final logger = Logger();
+          for (var i = 0; i < s.length; i++) {
+            logger.i(s.keys.elementAt(i).toString()+":"+s.values.elementAt(i).toString());
+          }
+        }else{
+          throw Exception('failed to show HAHAHAHAHA');
+        }
+      }on Exception{
+        print(Exception().toString());
+      }
+      
+    }
 }
