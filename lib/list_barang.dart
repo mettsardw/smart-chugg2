@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webapp_super/args.dart';
 import 'package:webapp_super/bar_bawah.dart';
 import 'package:webapp_super/barang.dart';
 import 'package:webapp_super/privacy_policy.dart';
@@ -12,9 +13,9 @@ class ListBarang extends StatefulWidget {
 }
 
 class _ListBarangState extends State<ListBarang> {
-  //bikin method instantiate barang
   List<Barang> _barangs = [new Barang(1,"IyemIyem", 1, 2000)];
   int _subtotal = 3999;
+  int _txnID = 1;
   int _subtotalBaru(){
     int tot = _barangs.length;
     int temp = 0;
@@ -60,14 +61,14 @@ class _ListBarangState extends State<ListBarang> {
             content: new Text("Quantity will decrease and you have to remove item from cart."),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("No"),
+                child: new Text("Yes"),
                 onPressed: () {
                   _deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
               new FlatButton(
-                child: new Text("Yes"),
+                child: new Text("No"),
                 onPressed: () {
                   _deleteBarang(idx);
                   Navigator.pop(context);
@@ -80,7 +81,7 @@ class _ListBarangState extends State<ListBarang> {
     return flag;
   }
   void _deleteBarang(int idx) {
-    //TODO: gimana caranya supaya bisa dialog boxnya jalan?
+    //TODO: gimana caranya supaya bisa dialog boxnya jalan? skrg ini pencet No ttp kedelet
     //if(_alertDeleteBarang()==true){
       if(_barangs[idx].qty==1){
         setState(() {
@@ -95,9 +96,18 @@ class _ListBarangState extends State<ListBarang> {
     _subtotal = _subtotalBaru();
   }
 
+  _isiBarangs(txnID) async{
+    print("Getting cart ke: "+txnID.toString());
+    List<Barang> barangs;
+    //TODO: hit service get List of barang
+    return barangs;
+  }
   @override
   Widget build(BuildContext context) {
-
+    final Args args = ModalRoute.of(context).settings.arguments;
+    _txnID=args.txnID as int;//TODO:masukin TXNID
+    //TODO: Get List Barang TxnID
+    _barangs = _isiBarangs(_txnID);
     return Scaffold(
       appBar: AppBar(
         title: Text("Keranjang Belanja"),
@@ -169,29 +179,7 @@ class _ListBarangState extends State<ListBarang> {
       ),
       floatingActionButtonLocation: 
         FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: BarBawah(_subtotal),
+      bottomNavigationBar: BarBawah(_subtotal,_txnID),
     );
   }
-}
-
-class BarCheckout extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Padding(
-          child: RaisedButton(
-          onPressed: () {
-              Navigator.pushNamed(context, '/checkout');
-            },
-            child: Text("Checkout"),
-          ),
-          padding: EdgeInsets.all(8.0),
-        ),
-      ],
-    );
-  }
-
 }

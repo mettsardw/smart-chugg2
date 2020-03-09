@@ -1,5 +1,7 @@
 class Args{
-  final int subtotal;
-
-  Args(this.subtotal);
+  int subtotal;
+  String txnID;
+  Args(this.subtotal,this.txnID);
+  Args.passSubtotal(this.subtotal);
+  Args.passTxnID(this.txnID);
 }

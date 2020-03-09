@@ -5,8 +5,10 @@ import 'checkout.dart';
 
 class BarBawah extends StatelessWidget {
   int _subtotal;
-  BarBawah(int _subtotal){
+  int _txnID;
+  BarBawah(int _subtotal,int _txnID){
     this._subtotal=_subtotal;
+    this._txnID=_txnID;
   }
 
   @override
@@ -29,7 +31,7 @@ class BarBawah extends StatelessWidget {
                 child: new Text("Yes"),
                 onPressed: () {
                   //Navigator.pushNamed(context, '/checkout');
-                  Navigator.pushNamed(context,Checkout.routeName,arguments: Args(_subtotal,));
+                  Navigator.pushNamed(context,Checkout.routeName,arguments: Args.passSubtotal(_subtotal));
                 },
               ),
             ],

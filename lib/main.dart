@@ -25,6 +25,16 @@ class MyApp extends StatelessWidget {
             ),
           );
         }
+        if(settings.name==ListBarang.routeName){
+          final Args args = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context) => Checkout(),
+            settings: RouteSettings(
+              arguments: args,
+            ),
+          );
+        }
+        //if no IFs,
         return MaterialPageRoute(
           builder: (context){
               return Checkout();

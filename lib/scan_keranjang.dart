@@ -30,6 +30,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:webapp_super/args.dart';
+import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/self_client.dart';
 
 class ScanKeranjang extends StatefulWidget {
@@ -90,7 +92,7 @@ class _ScanState extends State<ScanKeranjang> {
       */
       var dptCart = await _fetchData(isLoad/*TODO:,barcode*/);
       if(dptCart=="ok"){
-        Navigator.pushNamed(context, '/listBarang');
+        Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(barcode));
       }else{
         //TODO: hit createTransactionID
       }
