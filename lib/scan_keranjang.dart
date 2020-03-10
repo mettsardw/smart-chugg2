@@ -42,7 +42,7 @@ class ScanKeranjang extends StatefulWidget {
 
 class _ScanState extends State<ScanKeranjang> {
   String barcode = "";
-
+  String txnID = "";
   @override
   initState() {
     super.initState();
@@ -84,7 +84,7 @@ class _ScanState extends State<ScanKeranjang> {
 
   Future scan(isLoad) async {
     try {
-      /*//TODO: coba build dulu
+      /*//TODO: coba build dulu, scanBarcode jadi noID
       String barcode = await BarcodeScanner.scan();
       setState(() => this.barcode = barcode
       //Navigator.pushNamed(context, '/listBarang');
@@ -92,9 +92,12 @@ class _ScanState extends State<ScanKeranjang> {
       */
       var dptCart = await _fetchData(isLoad/*TODO:,barcode*/);
       if(dptCart=="ok"){
-        Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(barcode));
+        Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }else{
-        //TODO: hit createTransactionID
+        //TODO: hit createTransactionID, krn dptCart sudah dpt txnID tp belum ok statusnya
+        var sc = SelfClient();
+        var _newTxnID = await sc.recreateTrID(txnID);
+        Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
@@ -111,6 +114,7 @@ class _ScanState extends State<ScanKeranjang> {
     }
   }
 
+  //noID diambil dari barcode
   _fetchData(isLoad,{noID:1}) async{
       setState(() {
         isLoad=true;
@@ -125,8 +129,9 @@ class _ScanState extends State<ScanKeranjang> {
           isLoad=false;
         });
         if (m["status"].toString()=="ok") {
-          print(m["txnId"].toString());
-          //TODO: txnId masukin ke no.trx
+          print(m["ID_TRANSACTION"].toString());
+          //TODO: txnId masukin ke no.trx -> tinggal ditest
+          txnID = m["ID_TRANSACTION"].toString();
           return m["status"];
         }
       }catch(e){

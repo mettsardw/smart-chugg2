@@ -31,8 +31,12 @@ class SelfClient{
   
   //list trsx
   getTrID(noID) {
+    //balikan: ID_TRANSACTION
     return _postData("getTransactionID",_makeJSON("cartId", noID));
   }
 
-  
+  recreateTrID(noID) {
+    //balikan: ID_TRANSACTION
+    return _postData("createTransactionID",_makeJSON("cartId", noID));
+  }
 }
