@@ -92,6 +92,9 @@ class _ScanState extends State<ScanKeranjang> {
       */
       var dptCart = await _fetchData(isLoad/*TODO:,barcode*/);
       if(dptCart=="ok"){
+        print("sudah dpt status yaitu: "+dptCart);
+        print("dan txn ID: "+txnID);
+
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }else{
         //TODO: hit createTransactionID, krn dptCart sudah dpt txnID tp belum ok statusnya
@@ -115,7 +118,7 @@ class _ScanState extends State<ScanKeranjang> {
   }
 
   //noID diambil dari barcode
-  _fetchData(isLoad,{noID:1}) async{
+  _fetchData(isLoad,{noID:5}) async{
       setState(() {
         isLoad=true;
       });
@@ -128,11 +131,11 @@ class _ScanState extends State<ScanKeranjang> {
         setState(() {
           isLoad=false;
         });
-        if (m["status"].toString()=="ok") {
+        if (m["STATUS"].toString()=="ok") {
           print(m["ID_TRANSACTION"].toString());
           //TODO: txnId masukin ke no.trx -> tinggal ditest
           txnID = m["ID_TRANSACTION"].toString();
-          return m["status"];
+          return m["STATUS"].toString();
         }
       }catch(e){
         print(e.toString());

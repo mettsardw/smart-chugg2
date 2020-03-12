@@ -7,6 +7,18 @@ class Barang{
 
   Barang(this.id,this.nama,this.qty,this.baseprice){this.price = baseprice*qty;}
 
+  Barang.fromJson(Map<dynamic,dynamic> json){
+    this.id = json["ID_ITEM"];
+    this.nama = json["ITEM_DESC"];
+    this.qty= int.parse(json["QUANTITY"]);
+    this.baseprice = int.parse(json["BASE_PRICE"]);
+    this.price = this.qty * this.baseprice;
+  }
+
+  Map<String,dynamic> toJson() => {
+    "ID_ITEM":id,"ITEM_DESC":nama,"QUANTITY":qty,"BASE_PRICE":baseprice,
+  };
+
   void setQty(int qty){this.qty=qty;}
   int getQty(){return this.qty;}
   int getPrice(){return this.price;}

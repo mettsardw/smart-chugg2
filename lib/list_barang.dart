@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
 import 'package:webapp_super/bar_bawah.dart';
 import 'package:webapp_super/barang.dart';
+import 'package:webapp_super/barang_manager.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 import 'package:webapp_super/terms_and_conditions.dart';
@@ -13,9 +16,13 @@ class ListBarang extends StatefulWidget {
 }
 
 class _ListBarangState extends State<ListBarang> {
-  List<Barang> _barangs = [new Barang(1,"IyemIyem", 1, 2000)];
-  int _subtotal = 3999;
-  int _txnID = 1;
+  //List<Barang> _barangs = [new Barang(1,"IyemIyem", 1, 2000)];
+  List<Barang> _barangs = [];
+  //int _subtotal = 3999;
+  int _subtotal = 0;
+  int _txnID;// = 1;
+  var dur = Duration(seconds:5);
+  Timer _timer;
   int _subtotalBaru(){
     int tot = _barangs.length;
     int temp = 0;
@@ -70,7 +77,7 @@ class _ListBarangState extends State<ListBarang> {
               new FlatButton(
                 child: new Text("No"),
                 onPressed: () {
-                  _deleteBarang(idx);
+                  //_deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
@@ -81,33 +88,51 @@ class _ListBarangState extends State<ListBarang> {
     return flag;
   }
   void _deleteBarang(int idx) {
+    BarangManager bm = BarangManager();
     //TODO: gimana caranya supaya bisa dialog boxnya jalan? skrg ini pencet No ttp kedelet
     //if(_alertDeleteBarang()==true){
       if(_barangs[idx].qty==1){
+        var id = _barangs[idx].id;
+        bm.delBarang(id,txnID:_txnID);
+        _barangs.removeAt(idx);
         setState(() {
-          _barangs.removeAt(idx);
+          
         });
       }else{
+        var id = _barangs[idx].id;
+        _barangs[idx].removeBarang();
+        var qtyUpd = _barangs[idx].qty;
+        bm.updBarang(id,qtyUpd,txnID:_txnID);
         setState(() {
-          _barangs[idx].removeBarang();
+          
         });
       }
     //}
     _subtotal = _subtotalBaru();
   }
 
-  _isiBarangs(txnID) async{
-    print("Getting cart ke: "+txnID.toString());
-    List<Barang> barangs;
-    //TODO: hit service get List of barang
-    return barangs;
+  callIsiBarang(context) async{
+    BarangManager bm = BarangManager();
+    //TODO: Get List Barang TxnID
+    _barangs = await bm.isiBarangs(txnID:_txnID);
+    setState(() {
+      
+    });
+    
   }
+  /*
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_)=>callIsiBarang(context));
+  }*/
+
   @override
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;
-    _txnID=args.txnID as int;//TODO:masukin TXNID
-    //TODO: Get List Barang TxnID
-    _barangs = _isiBarangs(_txnID);
+    _txnID=int.parse(args.txnID);//TODO:masukin TXNID
+    if (_timer==null) {
+      _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Keranjang Belanja"),

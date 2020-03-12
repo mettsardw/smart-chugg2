@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         if(settings.name==ListBarang.routeName){
           final Args args = settings.arguments;
           return MaterialPageRoute(
-            builder: (context) => Checkout(),
+            builder: (context) => ListBarang(),
             settings: RouteSettings(
               arguments: args,
             ),
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         Thankyou.routeName:(context) =>Thankyou(),
         TermsAndConditions.routeName:(context) => TermsAndConditions(),
         PrivacyPolicy.routeName:(context) => PrivacyPolicy(),
-        ListBarang.routeName:(context) => ListBarang(),
+        //ListBarang.routeName:(context) => ListBarang(),
       },
       title: "Flutter Demo",
       theme: ThemeData(
