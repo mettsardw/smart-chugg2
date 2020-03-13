@@ -1,16 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
+import 'package:webapp_super/self_client.dart';
 import 'package:webapp_super/thankyou.dart';
 
 class Checkout extends StatelessWidget {
   static const routeName = '/checkout'; 
   //kasih listener untuk ganti screen setelah OTP diterima
-
+  _getOTPfromTxn({txnID: 11}) async{
+    SelfClient sc = SelfClient();
+    String otp = await sc.getOTP(txnID);
+    return otp;
+  }
   @override
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;
-
+    
     void _alertThankYouPopup(){
       showDialog(
         context: context,
@@ -64,7 +69,7 @@ class Checkout extends StatelessWidget {
             ),
             SizedBox(height: 40),
             Text(
-              "1917", //masukin otp disini
+              _getOTPfromTxn(txnID:args.txnID),//"1917", //masukin otp disini
               style: Theme.of(context).textTheme.display3.apply(fontWeightDelta: 10),
             ),
             //hack button

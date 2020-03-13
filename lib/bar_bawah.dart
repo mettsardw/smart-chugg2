@@ -31,7 +31,7 @@ class BarBawah extends StatelessWidget {
                 child: new Text("Yes"),
                 onPressed: () {
                   //Navigator.pushNamed(context, '/checkout');
-                  Navigator.pushNamed(context,Checkout.routeName,arguments: Args.passSubtotal(_subtotal));
+                  Navigator.pushNamed(context,Checkout.routeName,arguments: Args(_subtotal,_txnID.toString()));
                 },
               ),
             ],
