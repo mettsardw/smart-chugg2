@@ -115,6 +115,7 @@ class _ListBarangState extends State<ListBarang> {
     BarangManager bm = BarangManager();
     //TODO: Get List Barang TxnID
     _barangs = await bm.isiBarangs(txnID:_txnID);
+    _subtotal = _subtotalBaru();
     setState(() {
       
     });

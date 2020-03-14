@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/scan_keranjang.dart';
+import 'package:webapp_super/terms_and_conditions.dart';
 
 class Boarding extends StatelessWidget {
   @override
@@ -60,7 +61,7 @@ class Boarding extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.help_outline),
                   onPressed: () {
-                    Navigator.pushNamed(context, ListBarang.routeName);
+                    Navigator.pushNamed(context, TermsAndConditions.routeName);
                   },
                 ),
               )
