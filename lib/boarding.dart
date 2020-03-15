@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 import 'package:webapp_super/terms_and_conditions.dart';
 
@@ -31,12 +30,6 @@ class Boarding extends StatelessWidget {
               Text(
                 'smart shopping assistant',
                 style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5,fontWeightDelta: 20),
-                /*
-                 GoogleFonts.lato(
-                  textStyle: Theme.of(context).textTheme.body2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,),
-                */
               ),
               SizedBox(height: 100),
               RaisedButton(
@@ -67,20 +60,6 @@ class Boarding extends StatelessWidget {
               )
           ],
         )
-        /*
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-        */
       ),
     ),
     );

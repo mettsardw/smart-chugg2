@@ -33,8 +33,7 @@ class _ListBarangState extends State<ListBarang> {
   }
   void _tambahBarang() {
     setState(() {
-      //fetch new barang item
-      int idx = _barangs.length; //TODO: override isi ID by barang length
+      int idx = _barangs.length;
       Barang baru = new Barang(idx+1, "Iyem-"+idx.toString(), 1, idx*1010);
       bool isExistID = false;
       for (var _barang in _barangs) {
@@ -89,37 +88,32 @@ class _ListBarangState extends State<ListBarang> {
   }
   void _deleteBarang(int idx) {
     BarangManager bm = BarangManager();
-    //TODO: gimana caranya supaya bisa dialog boxnya jalan? skrg ini pencet No ttp kedelet
-    //if(_alertDeleteBarang()==true){
-      if(_barangs[idx].qty==1){
-        var id = _barangs[idx].id;
-        bm.delBarang(id,txnID:_txnID);
-        _barangs.removeAt(idx);
-        setState(() {
-          
-        });
-      }else{
-        var id = _barangs[idx].id;
-        _barangs[idx].removeBarang();
-        var qtyUpd = _barangs[idx].qty;
-        bm.updBarang(id,qtyUpd,txnID:_txnID);
-        setState(() {
-          
-        });
-      }
-    //}
+    if(_barangs[idx].qty==1){
+      var id = _barangs[idx].id;
+      bm.delBarang(id,txnID:_txnID);
+      _barangs.removeAt(idx);
+      setState(() {
+        
+      });
+    }else{
+      var id = _barangs[idx].id;
+      _barangs[idx].removeBarang();
+      var qtyUpd = _barangs[idx].qty;
+      bm.updBarang(id,qtyUpd,txnID:_txnID);
+      setState(() {
+        
+      });
+    }
     _subtotal = _subtotalBaru();
   }
 
   callIsiBarang(context) async{
     BarangManager bm = BarangManager();
-    //TODO: Get List Barang TxnID
     _barangs = await bm.isiBarangs(txnID:_txnID);
     _subtotal = _subtotalBaru();
     setState(() {
       
     });
-    
   }
   /*
   void initState(){
@@ -130,7 +124,7 @@ class _ListBarangState extends State<ListBarang> {
   @override
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;
-    _txnID=int.parse(args.txnID);//TODO:masukin TXNID
+    _txnID=int.parse(args.txnID);
     if (_timer==null) {
       _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
     }

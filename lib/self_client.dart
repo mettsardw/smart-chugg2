@@ -69,4 +69,9 @@ class SelfClient{
     //balikan: status, OTP
     return _postData("getOTP", _makeJSON("txnId", txnID));
   }
+
+  getTxStatus(txnID){
+    //balikan: status: open/closed
+    return _postData("getTransactionStatus", _makeJSON("txnId", txnID));
+  }
 }

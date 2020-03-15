@@ -9,7 +9,6 @@ class BarangManager{
   isiBarangs({txnID:11}) async{
     print("Getting txn ke: "+txnID.toString());
     List<Barang> barangs = [];
-    //TODO: hit service get List of barang
     Map <String,dynamic> m = await sc.inqBarangFromTxn(txnID);
     var jsonBrg = m["TRANSACTION_DETAIL"];
     for (var i = 0; i < jsonBrg.length; i++) {

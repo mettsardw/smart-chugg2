@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
@@ -11,12 +13,14 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout>{
+  var dur = Duration(seconds:7);
+  Timer _timer;
   var _otp = '';
-  //kasih listener untuk ganti screen setelah OTP diterima
+  var _gotPymt = false;
   @override
   Widget build(BuildContext context) {
-    final Args args = ModalRoute.of(context).settings.arguments;
-    var isLoad = true;
+    final Args args = ModalRoute.of(context).settings.arguments;   
+
     void _alertThankYouPopup(){
       showDialog(
         context: context,
@@ -26,7 +30,7 @@ class _CheckoutState extends State<Checkout>{
             content: new Text("Payment has been done, thank you for visiting! We hope it was an enjoyable shopping experience."),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("CLOSE"),
+                child: new Text("Close"),
                 onPressed: () {
                   Navigator.pushNamed(context,Thankyou.routeName);
                 },
@@ -37,6 +41,16 @@ class _CheckoutState extends State<Checkout>{
       );
     }
 
+    checkStatus(context,{txnID:11}) async{
+      SelfClient sc = new SelfClient();
+      var m = await sc.getTxStatus(txnID);
+      if (m["status"]=="closed") {
+        _gotPymt=true;
+        setState(() {
+          _alertThankYouPopup();
+        });
+      }
+    }
     _getOTPfromTxn({txnID: 11}) async{
       SelfClient sc = SelfClient();
       String otp;
@@ -103,6 +117,10 @@ class _CheckoutState extends State<Checkout>{
         ),
       )
       );
+    }
+
+    if (_timer==null) {
+      _timer = new Timer.periodic(dur, (Timer t)=> checkStatus(context,txnID:args.txnID));
     }
 
     return FutureBuilder(
