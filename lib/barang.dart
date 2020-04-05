@@ -34,7 +34,7 @@ class Barang{
     this.price=this.baseprice*this.qty;
   }
   String infoPrice(){
-    String tx = qty.toString()+" pcs x "+baseprice.toString() + " = Rp. " + price.toString();
+    String tx = qty.toString()+" pcs x Rp. "+baseprice.toString() + " = Rp. " + price.toString();
     return tx;
   }
 }

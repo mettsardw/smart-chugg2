@@ -127,12 +127,13 @@ class _ScanState extends State<ScanKeranjang> {
       try{
         //var response = await sc.postAfterScan(noID);
         //m = json.decode(response.body) as Map;
+        print("akan getTrID");
         m = await sc.getTrID(noID);
         setState(() {
           isLoad=false;
         });
         if (m["STATUS"].toString()=="ok") {
-          print(m["ID_TRANSACTION"].toString());
+          print(m["ID_TRANSACTION"].toString() + "assf");
           //TODO: txnId masukin ke no.trx -> tinggal ditest
           txnID = m["ID_TRANSACTION"].toString();
           return m["STATUS"].toString();

@@ -190,6 +190,7 @@ class _ListBarangState extends State<ListBarang> {
           },
         )
       ),
+      /*
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0.0,
         icon: const Icon(Icons.add),
@@ -199,6 +200,7 @@ class _ListBarangState extends State<ListBarang> {
       ),
       floatingActionButtonLocation: 
         FloatingActionButtonLocation.endFloat,
+      */
       bottomNavigationBar: BarBawah(_subtotal,_txnID),
     );
   }

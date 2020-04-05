@@ -61,7 +61,7 @@ class _CheckoutState extends State<Checkout>{
         _otp = otp;
       }catch(e){
           print(e.toString());
-          print("Gak berhasil dapet trx ID");
+          print("Gak berhasil dapet OTPnya");
       }
       
       return otp;
