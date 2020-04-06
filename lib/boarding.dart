@@ -25,7 +25,7 @@ class Boarding extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height:150),
-              Image.asset('assets/images/logo.png',height: 100),
+              Image.asset('assets/images/icon.png',height: 100),
               SizedBox(height:20),
               Text(
                 'smart shopping assistant',
