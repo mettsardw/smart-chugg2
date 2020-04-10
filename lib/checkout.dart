@@ -78,7 +78,7 @@ class _CheckoutState extends State<Checkout>{
         children: <Widget>[
             SizedBox(height: 40),
             Text(
-              "Thenk you for your purchase!",
+              "Thank you for your purchase!",
               style: Theme.of(context).textTheme.subhead,
             ),
             Text(
@@ -106,13 +106,14 @@ class _CheckoutState extends State<Checkout>{
             ),
             //hack button
             SizedBox(height: 100),
+            /*
             FlatButton(
               onPressed: _alertThankYouPopup,
               child: Text(
                   "Proceed to THANKYOU",
                   style: Theme.of(context).textTheme.overline,
                 ),
-            ),
+            ),*/
           ],
         ),
       )

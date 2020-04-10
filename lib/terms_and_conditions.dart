@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class TermsAndConditions extends StatelessWidget {
   static const routeName = '/tNC';
-  //kasih listener untuk ganti screen setelah OTP diterima
   @override
   Widget build(BuildContext context) {
     return Scaffold(

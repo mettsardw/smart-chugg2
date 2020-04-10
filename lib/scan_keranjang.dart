@@ -23,13 +23,10 @@ class ScanKeranjang extends StatelessWidget {
 */
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
-import 'package:http/http.dart' as http;
 import 'package:webapp_super/args.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/self_client.dart';
@@ -53,7 +50,7 @@ class _ScanState extends State<ScanKeranjang> {
     var isLoad = false;
     return Scaffold(
         appBar: new AppBar(
-          title: new Text('Scan Keranjang Belanja'),
+          title: new Text('Scan Shopping Cart'),
         ),
         body: new Center(
           child: new Column(
@@ -67,7 +64,7 @@ class _ScanState extends State<ScanKeranjang> {
                     textColor: Colors.white,
                     splashColor: Colors.blueGrey,
                     onPressed: () => scan(isLoad),//_fetchData(isLoad),
-                    child: const Text('START CAMERA SCAN')
+                    child: const Text('Start Camera Scan')
                 ),
               )
               ,

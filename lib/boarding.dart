@@ -28,7 +28,7 @@ class Boarding extends StatelessWidget {
               Image.asset('assets/images/icon.png',height: 100),
               SizedBox(height:20),
               Text(
-                'smart shopping assistant',
+                'Smart Shopping Assistant',
                 style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5,fontWeightDelta: 20),
               ),
               SizedBox(height: 100),
@@ -40,7 +40,7 @@ class Boarding extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
-                    'Scan Keranjang',
+                    'Start Shopping',
                     style: Theme.of(context).textTheme.subhead.apply(color: Colors.white,fontWeightDelta: 20),
                   ),
                 ),

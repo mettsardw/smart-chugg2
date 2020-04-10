@@ -67,14 +67,14 @@ class _ListBarangState extends State<ListBarang> {
             content: new Text("Quantity will decrease and you have to remove item from cart."),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("Yes"),
+                child: new Text("No"),
                 onPressed: () {
                   _deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
               new FlatButton(
-                child: new Text("No"),
+                child: new Text("Yes"),
                 onPressed: () {
                   //_deleteBarang(idx);
                   Navigator.pop(context);
@@ -130,7 +130,7 @@ class _ListBarangState extends State<ListBarang> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Keranjang Belanja"),
+        title: Text("Shopping List"),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.all(12.0),
@@ -179,7 +179,6 @@ class _ListBarangState extends State<ListBarang> {
           itemCount: _barangs.length,
           itemBuilder: (context, int i){
             return new ListTile(
-              //leading: FlutterLogo(size: 56.0),
               title: Text(_barangs[i].nama),
               subtitle: Text(_barangs[i].infoPrice()),
               trailing: IconButton(
