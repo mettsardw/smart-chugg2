@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 class SelfClient{
   //final url ="http://192.168.43.10:6969/";
-  final url = "https://private-0a53e-sss38.apiary-mock.com/";
+  //final url = "https://private-0a53e-sss38.apiary-mock.com/";
+  final url = "https://smarley-rest.herokuapp.com/";
   final Map<String,String> headers = {'Content-type':'application/json'};
   var cl;
   SelfClient(){

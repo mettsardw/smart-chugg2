@@ -47,6 +47,8 @@ class _CheckoutState extends State<Checkout>{
       if (m["status"]=="closed") {
         _gotPymt=true;
         setState(() {
+          _gotPymt=true;
+          _timer.cancel();
           _alertThankYouPopup();
         });
       }
