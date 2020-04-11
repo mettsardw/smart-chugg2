@@ -6,9 +6,11 @@ import 'checkout.dart';
 class BarBawah extends StatelessWidget {
   int _subtotal;
   int _txnID;
-  BarBawah(int _subtotal,int _txnID){
+  var _timer;
+  BarBawah(int _subtotal,int _txnID,_timer){
     this._subtotal=_subtotal;
     this._txnID=_txnID;
+    this._timer = _timer;
   }
 
   @override
@@ -30,6 +32,7 @@ class BarBawah extends StatelessWidget {
               new FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
+                  _timer.cancel();
                   //Navigator.pushNamed(context, '/checkout');
                   Navigator.pushNamed(context,Checkout.routeName,arguments: Args(_subtotal,_txnID.toString()));
                 },

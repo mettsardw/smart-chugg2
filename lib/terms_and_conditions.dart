@@ -8,6 +8,7 @@ class TermsAndConditions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
             SizedBox(height: 20),
+            /*
             Text(
                 "Terms and Conditions",
                 style: Theme.of(context).textTheme.title,
@@ -16,7 +17,7 @@ class TermsAndConditions extends StatelessWidget {
             Divider(
                 color: Colors.black,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20),*/
             RichText(
               text: TextSpan(
                 style: Theme.of(context).textTheme.body2,
@@ -41,7 +42,7 @@ class TermsAndConditions extends StatelessWidget {
         title: Text("Terms and Conditions")
       ),
       body:Container(
-        margin: EdgeInsets.all(10.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: isiTNC(context),
       ),
     );

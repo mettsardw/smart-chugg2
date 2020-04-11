@@ -21,13 +21,13 @@ class _CheckoutState extends State<Checkout>{
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;   
 
-    void _alertThankYouPopup(){
+    void _alertThankYouPopup(gotPy){
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Purchase Finished"),
-            content: new Text("Payment has been done, thank you for visiting! We hope it was an enjoyable shopping experience."),
+            title: gotPy? new Text("Purchase Finished"):new Text("Purchase Cancelled"),
+            content: gotPy? new Text("Payment has been done, thank you for visiting! We hope it was an enjoyable shopping experience."):new Text("Payment has been cancelled, thank you for visiting! We are sorry for any inconvenience caused."),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("Close"),
@@ -49,8 +49,11 @@ class _CheckoutState extends State<Checkout>{
         setState(() {
           _gotPymt=true;
           _timer.cancel();
-          _alertThankYouPopup();
+          _alertThankYouPopup(_gotPymt);
         });
+      }else if (m["status"]=="cancel"){
+        _timer.cancel();
+        _alertThankYouPopup(_gotPymt);
       }
     }
     _getOTPfromTxn({txnID: 11}) async{
@@ -133,8 +136,10 @@ class _CheckoutState extends State<Checkout>{
           return _trueBuild();
         }else{
           return Center(child: Container(
+              width: double.infinity,
+              height: double.infinity,
               //margin: const EdgeInsets.all(10.0),
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: CircularProgressIndicator(),
             ),
           );

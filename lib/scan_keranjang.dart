@@ -94,9 +94,9 @@ class _ScanState extends State<ScanKeranjang> {
 
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }else{
-        //TODO: hit createTransactionID, krn dptCart sudah dpt txnID tp belum ok statusnya
         var sc = SelfClient();
         var _newTxnID = await sc.recreateTrID(txnID);
+        txnID = _newTxnID;
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }
     } on PlatformException catch (e) {
@@ -129,11 +129,11 @@ class _ScanState extends State<ScanKeranjang> {
         setState(() {
           isLoad=false;
         });
-        if (m["STATUS"].toString()=="ok") {
-          print(m["ID_TRANSACTION"].toString() + "assf");
+        if (m["status"].toString()=="ok") {
+          print(m["txnId"].toString() + "assf");
           //TODO: txnId masukin ke no.trx -> tinggal ditest
-          txnID = m["ID_TRANSACTION"].toString();
-          return m["STATUS"].toString();
+          txnID = m["txnId"].toString();
+          return m["status"].toString();
         }
       }catch(e){
         print(e.toString());

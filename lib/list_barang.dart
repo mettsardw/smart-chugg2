@@ -69,14 +69,14 @@ class _ListBarangState extends State<ListBarang> {
               new FlatButton(
                 child: new Text("No"),
                 onPressed: () {
-                  _deleteBarang(idx);
+                  //_deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
               new FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
-                  //_deleteBarang(idx);
+                  _deleteBarang(idx);
                   Navigator.pop(context);
                 },
               ),
@@ -200,7 +200,7 @@ class _ListBarangState extends State<ListBarang> {
       floatingActionButtonLocation: 
         FloatingActionButtonLocation.endFloat,
       */
-      bottomNavigationBar: BarBawah(_subtotal,_txnID),
+      bottomNavigationBar: BarBawah(_subtotal,_txnID,_timer),
     );
   }
 }

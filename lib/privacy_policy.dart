@@ -10,6 +10,7 @@ class PrivacyPolicy extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
             SizedBox(height: 20),
+            /*
             Text(
                 "Privacy Policy",
                 style: Theme.of(context).textTheme.title,
@@ -18,7 +19,7 @@ class PrivacyPolicy extends StatelessWidget {
             Divider(
                 color: Colors.black,
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 50),*/
             Text("YMM built the Smart Shopping Assistant app as a Free app. This SERVICE is provided by YMM at no cost and is intended for use as is. \n",style: Theme.of(context).textTheme.body1),
             Text("This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service. \n",style: Theme.of(context).textTheme.body1),
             Text("If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy. \n",style: Theme.of(context).textTheme.body1),
@@ -57,7 +58,7 @@ class PrivacyPolicy extends StatelessWidget {
         title: Text("Privacy Policy")
       ),
       body: Container(
-        margin: EdgeInsets.all(10.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: isiPP(context),
       ),
     );
