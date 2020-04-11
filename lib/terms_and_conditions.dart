@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 
 class TermsAndConditions extends StatelessWidget {
   static const routeName = '/tNC';
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Terms and Conditions")
-      ),
-      body:
-      SingleChildScrollView(
+  isiTNC(context){
+    return SingleChildScrollView(
         child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -38,6 +32,17 @@ class TermsAndConditions extends StatelessWidget {
             ),
           ],
         ),
+      );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Terms and Conditions")
+      ),
+      body:Container(
+        margin: EdgeInsets.all(10.0),
+        child: isiTNC(context),
       ),
     );
   }

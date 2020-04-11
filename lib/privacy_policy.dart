@@ -4,14 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   static const routeName = '/pP';
-  //kasih listener untuk ganti screen setelah OTP diterima
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Privacy Policy")
-      ),
-      body: SingleChildScrollView(
+  isiPP(context){
+    return SingleChildScrollView(
         child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -54,6 +48,17 @@ class PrivacyPolicy extends StatelessWidget {
             Text("",style: Theme.of(context).textTheme.body1),
           ],
         ),
+      );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Privacy Policy")
+      ),
+      body: Container(
+        margin: EdgeInsets.all(10.0),
+        child: isiPP(context),
       ),
     );
   }

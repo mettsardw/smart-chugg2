@@ -132,7 +132,12 @@ class _CheckoutState extends State<Checkout>{
         if(_otp.hasData){
           return _trueBuild();
         }else{
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Container(
+              //margin: const EdgeInsets.all(10.0),
+              color: Colors.white,
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
       },
     );

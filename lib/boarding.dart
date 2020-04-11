@@ -12,8 +12,8 @@ class Boarding extends StatelessWidget {
           end: Alignment.bottomCenter,
           stops: [0,0.7,1],
           colors: [
-            Colors.white,
-            Colors.white,
+            Theme.of(context).scaffoldBackgroundColor,
+            Theme.of(context).scaffoldBackgroundColor,
             Colors.lime
           ],
         ),
