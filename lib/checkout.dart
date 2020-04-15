@@ -16,11 +16,11 @@ class _CheckoutState extends State<Checkout>{
   var dur = Duration(seconds:7);
   Timer _timer;
   var _otp = '';
+  var subt='';
   var _gotPymt = false;
   @override
   Widget build(BuildContext context) {
-    final Args args = ModalRoute.of(context).settings.arguments;   
-
+    final Args args = ModalRoute.of(context).settings.arguments;
     void _alertThankYouPopup(gotPy){
       showDialog(
         context: context,
@@ -44,6 +44,7 @@ class _CheckoutState extends State<Checkout>{
     checkStatus(context,{txnID:11}) async{
       SelfClient sc = new SelfClient();
       var m = await sc.getTxStatus(txnID);
+      subt= m['subtotal'].toString();
       if (m["status"]=="closed") {
         _gotPymt=true;
         setState(() {
@@ -83,7 +84,7 @@ class _CheckoutState extends State<Checkout>{
         children: <Widget>[
             SizedBox(height: 40),
             Text(
-              "Thank you for your purchase!",
+              "Thank you for shopping with us!",
               style: Theme.of(context).textTheme.subhead,
             ),
             Text(
@@ -92,7 +93,7 @@ class _CheckoutState extends State<Checkout>{
             ),
             SizedBox(height: 20),
             Text(
-                args.subtotal.toString(),
+                subt==''?args.subtotal.toString():subt.toString(),
                 style: Theme.of(context).textTheme.title,
             ),
             SizedBox(height: 30),
@@ -109,9 +110,15 @@ class _CheckoutState extends State<Checkout>{
               _otp,//"1917", //masukin otp disini
               style: Theme.of(context).textTheme.display3.apply(fontWeightDelta: 10),
             ),
+            SizedBox(height: 40),
+            Text(
+              "Please wait while the cashier helps with the checkout.",
+              style: Theme.of(context).textTheme.subhead,
+            ),
+            /*
             //hack button
             SizedBox(height: 100),
-            /*
+            
             FlatButton(
               onPressed: _alertThankYouPopup,
               child: Text(
