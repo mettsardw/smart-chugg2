@@ -136,22 +136,47 @@ class _CheckoutState extends State<Checkout>{
       _timer = new Timer.periodic(dur, (Timer t)=> checkStatus(context,txnID:args.txnID));
     }
 
-    return FutureBuilder(
-      future: _getOTPfromTxn(txnID: args.txnID),
-      builder: (context,_otp){
-        if(_otp.hasData){
-          return _trueBuild();
-        }else{
-          return Center(child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              //margin: const EdgeInsets.all(10.0),
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:FutureBuilder(
+        future: _getOTPfromTxn(txnID: args.txnID),
+        builder: (context,_otp){
+          if(_otp.hasData){
+            return _trueBuild();
+          }else{
+            return Container(
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-      },
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      child: CircularProgressIndicator(),
+                      height: 50.0,
+                      width: 50.0,
+                    ),
+                  ],
+                ),
+              )
+            );
+            /*
+            return Center(child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                //margin: const EdgeInsets.all(10.0),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 50.0,
+                  width: 50.0,
+                ),
+              ),
+            );
+            */
+          }
+        },
+      )
     );
     /*
     if (isLoad) {
