@@ -126,6 +126,8 @@ class _ListBarangState extends State<ListBarang> {
     _txnID=int.parse(args.txnID);
     if (_timer==null) {
       _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
+    }else if(!_timer.isActive){
+      _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
     }
 
     truBuild(){

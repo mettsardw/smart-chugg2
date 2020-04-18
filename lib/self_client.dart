@@ -29,6 +29,7 @@ class SelfClient{
     var svc=url+suffix;
     var response;
     try{
+      print("hit url: "+svc);
       response = await http.post(svc,headers: headers, body:body);
       if(response.statusCode==200){
         m = json.decode(response.body) as Map;
@@ -70,6 +71,11 @@ class SelfClient{
   getOTP(txnID){
     //balikan: status, OTP
     return _postData("getOTP", _makeJSON("txnId", txnID));
+  }
+
+  cancelCheckout(txnID){
+    //balikan: 
+    return _postData("cancelCheckout", _makeJSON("txnId", txnID));
   }
 
   getTxStatus(txnID){

@@ -81,13 +81,11 @@ class _ScanState extends State<ScanKeranjang> {
 
   Future scan(isLoad) async {
     try {
-      /*//TODO: coba build dulu, scanBarcode jadi noID
       String barcode = await BarcodeScanner.scan();
       setState(() => this.barcode = barcode
       //Navigator.pushNamed(context, '/listBarang');
       );
-      */
-      var dptCart = await _fetchData(isLoad/*TODO:,barcode*/);
+      var dptCart = await _fetchData(isLoad,noID:barcode);
       if(dptCart=="ok"){
         print("sudah dpt status yaitu: "+dptCart);
         print("dan txn ID: "+txnID);

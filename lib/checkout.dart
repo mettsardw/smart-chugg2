@@ -14,6 +14,7 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout>{
   var dur = Duration(seconds:7);
+  bool mauBalik = false;
   Timer _timer;
   var _otp = '';
   var subt='';
@@ -21,6 +22,7 @@ class _CheckoutState extends State<Checkout>{
   @override
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;
+    
     void _alertThankYouPopup(gotPy){
       showDialog(
         context: context,
@@ -58,22 +60,44 @@ class _CheckoutState extends State<Checkout>{
       }
     }
     _getOTPfromTxn({txnID: 11}) async{
+      if(mauBalik){
+        return '';
+      }else{
+        print("GETOTPNYA MAU BALIK: "+mauBalik.toString());
+        SelfClient sc = SelfClient();
+        String otp;
+        try{
+          var m = await sc.getOTP(txnID);
+          otp = m["OTP"];
+          print("INI OTPNYA: " + otp);
+          _otp = otp;
+        }catch(e){
+            print(e.toString());
+            print("Gak berhasil dapet OTPnya");
+        }
+        
+        return otp;
+      }
+    }
+
+    _cancelCheckout({txnID: 7}) async{
+      mauBalik=true;
+      print(mauBalik);
       SelfClient sc = SelfClient();
-      String otp;
       try{
-        var m = await sc.getOTP(txnID);
-        otp = m["OTP"];
-        print("INI OTPNYA: " + otp);
-        _otp = otp;
+        var m = await sc.cancelCheckout(txnID);
+        if(m['status']=='ok'){
+          _timer.cancel();
+          Navigator.of(context).pop(true);
+          print("uda ke cancel tuh checkoutnya");
+        }
       }catch(e){
           print(e.toString());
-          print("Gak berhasil dapet OTPnya");
       }
-      
-      return otp;
     }
 
     _trueBuild(){
+      print("Pas masuk trueBuild "+mauBalik.toString());
       return Scaffold(
       appBar: AppBar(
         title: Text("Checkout")
@@ -136,18 +160,20 @@ class _CheckoutState extends State<Checkout>{
       );
     }
 
-    if (_timer==null) {
-      _timer = new Timer.periodic(dur, (Timer t)=> checkStatus(context,txnID:args.txnID));
-    }
+    
 
     return WillPopScope(
-      onWillPop: () => Future.value(false),
+      onWillPop: () => _cancelCheckout(txnID: args.txnID),
       child:FutureBuilder(
         future: _getOTPfromTxn(txnID: args.txnID),
         builder: (context,_otp){
           if(_otp.hasData){
             return _trueBuild();
           }else{
+            if (_timer==null || !_timer.isActive) {
+              _timer = new Timer.periodic(dur, (Timer t)=> checkStatus(context,txnID:args.txnID));
+            }
+            mauBalik=false;
             return Container(
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Center(
