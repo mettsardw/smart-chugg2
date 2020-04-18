@@ -7,7 +7,6 @@ import 'package:webapp_super/barang.dart';
 import 'package:webapp_super/barang_manager.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
-import 'package:webapp_super/terms_and_conditions.dart';
 
 class ListBarang extends StatefulWidget {
   static const routeName = '/listBarang';
@@ -128,8 +127,11 @@ class _ListBarangState extends State<ListBarang> {
     if (_timer==null) {
       _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
     }
-    return Scaffold(
+
+    truBuild(){
+        return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Shopping List"),
         actions: <Widget>[
           Padding(
@@ -202,6 +204,12 @@ class _ListBarangState extends State<ListBarang> {
         FloatingActionButtonLocation.endFloat,
       */
       bottomNavigationBar: BarBawah(_subtotal,_txnID,_timer),
+      );
+    }
+    
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: truBuild(),
     );
   }
 }
