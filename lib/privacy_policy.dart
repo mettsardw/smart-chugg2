@@ -26,7 +26,7 @@ class PrivacyPolicy extends StatelessWidget {
             Text("The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at Smart Shopping Assistant unless otherwise defined in this Privacy Policy. \n",style: Theme.of(context).textTheme.body1),
             Text("Information Collection and Use\n",style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 10),),
             Text("For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to Device ID, Camera Access. The information that I request will be retained on your device and is not collected by me in any way. \n The app does use third party services that may collect information used to identify you.\n",style: Theme.of(context).textTheme.body1),
-            RichText(text: TextSpan(text:"Google Play Services",style: Theme.of(context).textTheme.body1,
+            RichText(text: TextSpan(text:"Google Play Services\n",style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 10,decoration: TextDecoration.underline),
                     recognizer: new TapGestureRecognizer()
                       ..onTap = () { launch('https://www.google.com/policies/privacy/');
                       }

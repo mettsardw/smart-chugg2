@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
 import 'package:webapp_super/terms_and_conditions.dart';
 
@@ -54,7 +55,7 @@ class Boarding extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.help_outline),
                   onPressed: () {
-                    Navigator.pushNamed(context, TermsAndConditions.routeName);
+                    Navigator.pushNamed(context, PrivacyPolicy.routeName);
                   },
                 ),
               )

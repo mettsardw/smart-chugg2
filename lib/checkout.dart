@@ -93,8 +93,8 @@ class _CheckoutState extends State<Checkout>{
             ),
             SizedBox(height: 20),
             Text(
-                subt==''?args.subtotal.toString():subt.toString(),
-                style: Theme.of(context).textTheme.title,
+                'Rp. ' +(subt==''? args.subtotal.toString():subt.toString()),
+                style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5,fontWeightDelta: 20),
             ),
             SizedBox(height: 30),
             Divider(
@@ -112,7 +112,11 @@ class _CheckoutState extends State<Checkout>{
             ),
             SizedBox(height: 40),
             Text(
-              "Please wait while the cashier helps with the checkout.",
+              "Please wait while the cashier",
+              style: Theme.of(context).textTheme.subhead,
+            ),
+            Text(
+              "helps with the checkout.",
               style: Theme.of(context).textTheme.subhead,
             ),
             /*

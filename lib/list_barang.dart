@@ -149,6 +149,7 @@ class _ListBarangState extends State<ListBarang> {
                       child: Text('Change Cart')
                       ),
                   ),
+                  /*
                   PopupMenuItem<Text>(
                     value: Text('3'),
                     child: FlatButton(
@@ -157,7 +158,7 @@ class _ListBarangState extends State<ListBarang> {
                       },
                       child: Text('Terms & Conditions')
                       ),
-                  ),
+                  ),*/
                   PopupMenuItem<Text>(
                     value: Text('4'),
                     child: FlatButton(
