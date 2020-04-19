@@ -10,6 +10,7 @@ import 'package:webapp_super/scan_keranjang.dart';
 
 class ListBarang extends StatefulWidget {
   static const routeName = '/listBarang';
+  static Timer listtimer;
   @override
   _ListBarangState createState() => _ListBarangState();
 }
@@ -21,7 +22,6 @@ class _ListBarangState extends State<ListBarang> {
   int _subtotal = 0;
   int _txnID;// = 1;
   var dur = Duration(seconds:5);
-  Timer _timer;
   int _subtotalBaru(){
     int tot = _barangs.length;
     int temp = 0;
@@ -124,12 +124,10 @@ class _ListBarangState extends State<ListBarang> {
   Widget build(BuildContext context) {
     final Args args = ModalRoute.of(context).settings.arguments;
     _txnID=int.parse(args.txnID);
-    if (_timer==null) {
-      _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
-    }else if(!_timer.isActive){
-      _timer = new Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
+    if (ListBarang.listtimer==null || !ListBarang.listtimer.isActive) {
+      ListBarang.listtimer = Timer.periodic(dur, (Timer t)=> callIsiBarang(context));
     }
-
+    
     truBuild(){
         return Scaffold(
       appBar: AppBar(
@@ -205,7 +203,7 @@ class _ListBarangState extends State<ListBarang> {
       floatingActionButtonLocation: 
         FloatingActionButtonLocation.endFloat,
       */
-      bottomNavigationBar: BarBawah(_subtotal,_txnID,_timer),
+      bottomNavigationBar: BarBawah(_subtotal,_txnID),
       );
     }
     

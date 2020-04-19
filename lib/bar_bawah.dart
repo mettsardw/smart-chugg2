@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
+import 'package:webapp_super/list_barang.dart';
 
 import 'checkout.dart';
 
 class BarBawah extends StatelessWidget {
   int _subtotal;
   int _txnID;
-  var _timer;
-  BarBawah(int _subtotal,int _txnID,_timer){
+  //var _timer;
+  BarBawah(int _subtotal,int _txnID){
     this._subtotal=_subtotal;
     this._txnID=_txnID;
-    this._timer = _timer;
+    //this._timer = ListBarang.listtimer;
   }
 
   @override
@@ -32,7 +33,7 @@ class BarBawah extends StatelessWidget {
               new FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
-                  _timer.cancel();
+                  ListBarang.listtimer.cancel();
                   //Navigator.pushNamed(context, '/checkout');
                   Navigator.pushNamed(context,Checkout.routeName,arguments: Args(_subtotal,_txnID.toString()));
                 },

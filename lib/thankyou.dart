@@ -44,6 +44,7 @@ class Thankyou extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/');
+                    //Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
                   },
                 ),
             ],

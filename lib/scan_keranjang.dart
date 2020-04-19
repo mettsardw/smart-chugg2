@@ -41,16 +41,58 @@ class ScanKeranjang extends StatefulWidget {
 class ScanState extends State<ScanKeranjang> {
   String barcode = "";
   String txnID = "";
+  var isOKIntr = false;
   var isLoad = false;
   @override
   initState() {
     super.initState();
+    void _intro(){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Scan QR code"),
+            content: new Text("Please aim your camera to the QR Code on your cart."),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  //isOKIntr=true;
+                  Navigator.of(context).pop();
+                  scan(true);
+                  setState(() {
+                    isLoad=true;
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    paint() {
+      return new Stack(
+        alignment: FractionalOffset.center,
+        children: <Widget>[
+          new Positioned.fill(
+            child: new Opacity(
+              opacity: 0.3,
+              child: Text("Please align to QR Code on your cart."),
+            ),
+          ),
+        ],
+      );
+    }
 
     Future.delayed(Duration.zero, () async {
-      scan(true);
-      setState(() {
-        isLoad=true;
-      });
+      _intro();
+      /*
+      if(isOKIntr){
+        scan(true);
+        setState(() {
+          isLoad=true;
+        });
+      }*/
     });
   }
   @override
@@ -66,6 +108,7 @@ class ScanState extends State<ScanKeranjang> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              /*
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
@@ -80,9 +123,8 @@ class ScanState extends State<ScanKeranjang> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(barcode, textAlign: TextAlign.center,),
-              )
-              ,
-            ],
+              ),*/    
+              ],
           ),
         ));
     }
@@ -128,11 +170,12 @@ class ScanState extends State<ScanKeranjang> {
       }else{//jk belom existing,
         var sc = SelfClient();
         print("lagi recreate si cart: "+barcode);
-        var _newTxnID = await sc.recreateTrID(barcode);
+        var _m = await sc.recreateTrID(barcode);
         setState(() {
           isLoad=false;
         });
-        txnID = _newTxnID;
+        txnID = _m["txnId"];
+        print("dapet new txn: "+txnID);
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }
     } on PlatformException catch (e) {
