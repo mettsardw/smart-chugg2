@@ -1,27 +1,3 @@
-/*import 'package:flutter/material.dart';
-
-class ScanKeranjang extends StatelessWidget {
-  static const routeName = '/scanKeranjang';
-  @override
-  Widget build(BuildContext context) {
-    var scaffold = Scaffold(
-      appBar: AppBar(
-        title: Text("Scan Keranjang Belanja"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/listBarang');
-          },
-          child: Text('List Barang'),
-        ),
-      ),
-    );
-    return scaffold;
-  }
-}
-*/
-
 import 'dart:async';
 
 import 'package:barcode_scan/barcode_scan.dart';
@@ -31,37 +7,54 @@ import 'package:webapp_super/args.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/self_client.dart';
 
-class ScanKeranjang extends StatefulWidget {
-  static const routeName = '/scanKeranjang';
+class Scanner extends StatefulWidget {
+  static const routeName = '/scanner';
   //static ScanState ss = new ScanState();
   @override
   ScanState createState() => new ScanState();
 }
 
-class ScanState extends State<ScanKeranjang> {
+class ScanState extends State<Scanner> {
   String barcode = "";
   String txnID = "";
-  var isLoad = false;
   @override
   initState() {
     super.initState();
-
-    Future.delayed(Duration.zero, () async {
-      scan(true);
-      setState(() {
-        isLoad=true;
-      });
-    });
   }
+
   @override
   Widget build(BuildContext context) {
+    var isLoad = false;
 
     itfBuild(){
       return Scaffold(
         appBar: new AppBar(
           title: new Text('Scan Shopping Cart'),
         ),
-        body: new Center(
+        body: FutureBuilder<void>(
+          future: scan(isLoad),
+          builder: (context,barcode){
+          if(!isLoad){
+            //Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
+          }else{
+            return Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      child: CircularProgressIndicator(),
+                      height: 50.0,
+                      width: 50.0,
+                    ),
+                  ],
+                ),
+              )
+            );
+          }},
+        ),/*new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -84,33 +77,12 @@ class ScanState extends State<ScanKeranjang> {
               ,
             ],
           ),
-        ));
-    }
-
-    circleProgress(){
-      return Scaffold(
-        appBar: new AppBar(
-          title: new Text('Scan Shopping Cart'),
-        ),body:Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      child: CircularProgressIndicator(),
-                      height: 50.0,
-                      width: 50.0,
-                    ),
-                  ],
-                ),
-              )
-            )
-      );
+        )*/
+        );
     }
     
-    return isLoad?circleProgress():itfBuild();
+    return itfBuild();
+    //return isLoad? CircularProgressIndicator(): itfBuild();
   }
 
   Future scan(isLoad) async {
@@ -120,18 +92,14 @@ class ScanState extends State<ScanKeranjang> {
         () => this.barcode = barcode
       );
       var dptCart = await _fetchData(isLoad,noID:barcode);
-      if(dptCart=="ok"){//jika get trx ID dah existing,
+      if(dptCart=="ok"){
         print("sudah dpt status yaitu: "+dptCart);
         print("dan txn ID: "+txnID);
 
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
-      }else{//jk belom existing,
+      }else{
         var sc = SelfClient();
-        print("lagi recreate si cart: "+barcode);
-        var _newTxnID = await sc.recreateTrID(barcode);
-        setState(() {
-          isLoad=false;
-        });
+        var _newTxnID = await sc.recreateTrID(txnID);
         txnID = _newTxnID;
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }
@@ -169,6 +137,7 @@ class ScanState extends State<ScanKeranjang> {
         });
         if (m["status"].toString()=="ok") {
           print(m["txnId"].toString() + "assf");
+          //TODO: txnId masukin ke no.trx -> tinggal ditest
           txnID = m["txnId"].toString();
           return m["status"].toString();
         }

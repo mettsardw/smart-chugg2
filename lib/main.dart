@@ -6,6 +6,7 @@ import 'package:webapp_super/checkout.dart';
 import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/privacy_policy.dart';
 import 'package:webapp_super/scan_keranjang.dart';
+import 'package:webapp_super/scanner.dart';
 import 'package:webapp_super/terms_and_conditions.dart';
 import 'package:webapp_super/thankyou.dart';
 
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) =>Boarding(),
         ScanKeranjang.routeName:(context) => ScanKeranjang(),
+        Scanner.routeName:(context) => Scanner(),
         //Checkout.routeName:(context) =>Checkout(), //checkout page di OnGenerateRoute
         Thankyou.routeName:(context) =>Thankyou(),
         TermsAndConditions.routeName:(context) => TermsAndConditions(),
