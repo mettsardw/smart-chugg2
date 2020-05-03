@@ -25,6 +25,7 @@ class ScanKeranjang extends StatelessWidget {
 import 'dart:async';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webapp_super/args.dart';
@@ -47,14 +48,34 @@ class ScanState extends State<ScanKeranjang> {
   initState() {
     super.initState();
     void _intro(){
+      /*
+      infoDialog(context,
+      "Please aim your camera to the QR Code on your cart.",
+      title:"Scan QR Code",
+      neutralAction: (){
+        Navigator.of(context).pop();
+        scan(true);
+        setState(() {
+          isLoad=true;
+        });
+      },
+      neutralText: "OK"
+      );*/
+      
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return WillPopScope(onWillPop: (){
+            Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+          },
+          child: AlertDialog(
             title: new Text("Scan QR code"),
             content: new Text("Please aim your camera to the QR Code on your cart."),
             actions: <Widget>[
               new FlatButton(
+                color: Colors.lime,
+                textColor: Colors.white,
                 child: new Text("OK"),
                 onPressed: () {
                   //isOKIntr=true;
@@ -66,7 +87,9 @@ class ScanState extends State<ScanKeranjang> {
                 },
               ),
             ],
+          )
           );
+          
         },
       );
     }

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Barang{
   int id;
   String nama;
@@ -20,6 +22,7 @@ class Barang{
   };
 
   void setQty(int qty){this.qty=qty;}
+  String getNama(){return this.nama;}
   int getQty(){return this.qty;}
   int getPrice(){return this.price;}
   void removeBarang(){
@@ -34,7 +37,8 @@ class Barang{
     this.price=this.baseprice*this.qty;
   }
   String infoPrice(){
-    String tx = qty.toString()+" pcs x Rp. "+baseprice.toString() + " = Rp. " + price.toString();
+    var cur = NumberFormat.currency(locale: "id",symbol:"Rp. ",decimalDigits: 0);
+    String tx = qty.toString()+" pcs @ "+cur.format(baseprice).toString() + " = " + cur.format(price).toString();
     return tx;
   }
 }

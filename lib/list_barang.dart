@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:webapp_super/args.dart';
 import 'package:webapp_super/bar_bawah.dart';
 import 'package:webapp_super/barang.dart';
 import 'package:webapp_super/barang_manager.dart';
 import 'package:webapp_super/privacy_policy.dart';
-import 'package:webapp_super/scan_keranjang.dart';
 
 class ListBarang extends StatefulWidget {
   static const routeName = '/listBarang';
@@ -62,8 +62,8 @@ class _ListBarangState extends State<ListBarang> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Are you sure you want to delete?"),
-            content: new Text("Quantity will decrease and you have to remove item from cart."),
+            title: new Text("Delete ${_barangs[idx].getNama()}?"),
+            content: new Text("Quantity will decrease and you have to remove the item from cart."),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("No"),
@@ -73,8 +73,11 @@ class _ListBarangState extends State<ListBarang> {
                 },
               ),
               new FlatButton(
+                color: Colors.lime,
+                textColor: Colors.white,
                 child: new Text("Yes"),
                 onPressed: () {
+                  var brg = _barangs[idx].getNama();
                   _deleteBarang(idx);
                   Navigator.pop(context);
                 },
@@ -92,7 +95,6 @@ class _ListBarangState extends State<ListBarang> {
       bm.delBarang(id,txnID:_txnID);
       _barangs.removeAt(idx);
       setState(() {
-        
       });
     }else{
       var id = _barangs[idx].id;
@@ -143,25 +145,6 @@ class _ListBarangState extends State<ListBarang> {
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<Text>>[
                   PopupMenuItem<Text>(
-                    value: Text('2'),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, ScanKeranjang.routeName);
-                      },
-                      child: Text('Change Cart')
-                      ),
-                  ),
-                  /*
-                  PopupMenuItem<Text>(
-                    value: Text('3'),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, TermsAndConditions.routeName);
-                      },
-                      child: Text('Terms & Conditions')
-                      ),
-                  ),*/
-                  PopupMenuItem<Text>(
                     value: Text('4'),
                     child: FlatButton(
                       onPressed: () {
@@ -176,8 +159,9 @@ class _ListBarangState extends State<ListBarang> {
           ),
         ],
       ),
-      body: Center(
-        child: ListView.separated(
+      body:
+        Center(
+        child: _barangs.isEmpty? Center(child: Text('Empty')) : ListView.separated(
           separatorBuilder: (context, index) => Divider(),
           itemCount: _barangs.length,
           itemBuilder: (context, int i){

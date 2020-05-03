@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:webapp_super/args.dart';
+import 'package:webapp_super/list_barang.dart';
 import 'package:webapp_super/self_client.dart';
 import 'package:webapp_super/thankyou.dart';
 
@@ -16,6 +18,7 @@ class _CheckoutState extends State<Checkout>{
   var dur = Duration(seconds:7);
   bool mauBalik = false;
   Timer _timer;
+  var cur = NumberFormat.currency(locale: "id",symbol:"Rp. ",decimalDigits: 0);
   var _otp = '';
   var subt='';
   var _gotPymt = false;
@@ -32,8 +35,11 @@ class _CheckoutState extends State<Checkout>{
             content: gotPy? new Text("Payment has been done, thank you for visiting! We hope it was an enjoyable shopping experience."):new Text("Payment has been cancelled, thank you for visiting! We are sorry for any inconvenience caused."),
             actions: <Widget>[
               new FlatButton(
+                color: Colors.lime,
+                textColor: Colors.white,
                 child: new Text("Close"),
                 onPressed: () {
+                  ListBarang.listtimer.cancel();
                   Navigator.pushNamed(context,Thankyou.routeName);
                 },
               ),
@@ -46,6 +52,7 @@ class _CheckoutState extends State<Checkout>{
     checkStatus(context,{txnID:11}) async{
       SelfClient sc = new SelfClient();
       var m = await sc.getTxStatus(txnID);
+      print(m);
       subt= m['subtotal'].toString();
       if (m["status"]=="closed") {
         _gotPymt=true;
@@ -117,7 +124,7 @@ class _CheckoutState extends State<Checkout>{
             ),
             SizedBox(height: 20),
             Text(
-                'Rp. ' +(subt==''? args.subtotal.toString():subt.toString()),
+                (subt==''? cur.format(args.subtotal) : cur.format(subt)),
                 style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5,fontWeightDelta: 20),
             ),
             SizedBox(height: 30),
@@ -143,6 +150,9 @@ class _CheckoutState extends State<Checkout>{
               "helps with the checkout.",
               style: Theme.of(context).textTheme.subhead,
             ),
+            SizedBox(height: 40),
+            SizedBox(height: 10,width:100,child: LinearProgressIndicator(value: null),),
+            
             /*
             //hack button
             SizedBox(height: 100),

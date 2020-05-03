@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:webapp_super/args.dart';
 import 'package:webapp_super/list_barang.dart';
 
@@ -7,6 +8,7 @@ import 'checkout.dart';
 class BarBawah extends StatelessWidget {
   int _subtotal;
   int _txnID;
+  var cur = NumberFormat.currency(locale: "id",symbol:"Rp. ",decimalDigits: 0);
   //var _timer;
   BarBawah(int _subtotal,int _txnID){
     this._subtotal=_subtotal;
@@ -31,6 +33,8 @@ class BarBawah extends StatelessWidget {
                 },
               ),
               new FlatButton(
+                color: Colors.lime,
+                textColor: Colors.white,
                 child: new Text("Yes"),
                 onPressed: () {
                   ListBarang.listtimer.cancel();
@@ -44,28 +48,36 @@ class BarBawah extends StatelessWidget {
       );
     }
     return BottomAppBar(
+      color: Colors.lime,
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
             child: Text(
-              "Subtotal: "+_subtotal.toString(),
-              style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 20),
+              "Subtotal: "+cur.format(_subtotal).toString(),
+              style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 20,fontSizeDelta: 1),
               ),
             padding: EdgeInsets.all(12.0),
           ),
           Padding(
-              child: RaisedButton(
+              child: FlatButton(
                 padding: const EdgeInsets.all(0.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.lime,
+                    border: Border(
+                      top: BorderSide(width: 1.0, color: Colors.white),
+                      left: BorderSide(width: 1.0, color: Colors.white),
+                      right: BorderSide(width: 1.0, color: Colors.white),
+                      bottom: BorderSide(width: 1.0, color: Colors.white),
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                    color: Colors.white,
                   ),
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Checkout',
-                    style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 10),
+                    style: Theme.of(context).textTheme.subhead.apply(fontWeightDelta: 10,color:Theme.of(context).textTheme.body1.color),
                   ),
                 ),
                 onPressed: _alertYakinCheckout,
