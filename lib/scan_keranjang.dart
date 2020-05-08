@@ -188,7 +188,10 @@ class ScanState extends State<ScanKeranjang> {
       if(dptCart=="ok"){//jika get trx ID dah existing,
         print("sudah dpt status yaitu: "+dptCart);
         print("dan txn ID: "+txnID);
-
+        //var _m = await sc.recreateTrID(barcode);
+        setState(() {
+          isLoad=false;
+        });
         Navigator.pushNamed(context,ListBarang.routeName,arguments: Args.passTxnID(txnID));
       }else{//jk belom existing,
         var sc = SelfClient();

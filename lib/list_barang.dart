@@ -30,67 +30,85 @@ class _ListBarangState extends State<ListBarang> {
     }
     return temp;
   }
-  void _tambahBarang() {
-    setState(() {
-      int idx = _barangs.length;
-      Barang baru = new Barang(idx+1, "Iyem-"+idx.toString(), 1, idx*1010);
-      bool isExistID = false;
-      for (var _barang in _barangs) {
-        if (baru.id==_barang.id) {
-          isExistID = true;
-          if (isExistID) {
-            _barang.addQty();
-          }
-          break;
-        }
-      }
-      if (!isExistID) {
-        _barangs.add(baru);
-      }
-      _subtotal = _subtotalBaru();
-      /*
-      _counter++;
-      _dataBarang.add(_counter.toString());
-      _dataPrice.add((_counter*1000));
-      _subtotal+=(_counter*1000);
-      */
-    });
-  }
   bool _alertDeleteBarang(int idx){
     bool flag=false;
+    Text tamp(count){
+      return new Text(count.toString());
+    }
+    int itemCount=1;
+    String cnt = '1';
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("Delete ${_barangs[idx].getNama()}?"),
-            content: new Text("Quantity will decrease and you have to remove the item from cart."),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text("No"),
-                onPressed: () {
-                  //_deleteBarang(idx);
-                  Navigator.pop(context);
-                },
-              ),
-              new FlatButton(
-                color: Colors.lime,
-                textColor: Colors.white,
-                child: new Text("Yes"),
-                onPressed: () {
-                  var brg = _barangs[idx].getNama();
-                  _deleteBarang(idx);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          
+          return StatefulBuilder(
+            builder: (context,setState){
+              return AlertDialog(
+                title: new Text("Delete ${_barangs[idx].getNama()}?"),
+                content: 
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('Quantity will decrease and you have'),
+                      Text('to remove the item from cart.\n'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: ()=>setState((){
+                              if(itemCount>1){
+                                itemCount--;
+                                cnt = itemCount.toString();
+                                print('kedelete nih');
+                              }
+                            })
+                          ),
+                        new Text(cnt),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: ()=>setState((){
+                              if(itemCount<_barangs[idx].qty){
+                                itemCount++;
+                                cnt = itemCount.toString();
+                                print('keadd nih');
+                              }
+                            })
+                          )
+                      ],
+                      ),
+                    ],
+                  ),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("No"),
+                    onPressed: () {
+                      //_deleteBarang(idx);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  new FlatButton(
+                    color: Colors.lime,
+                    textColor: Colors.white,
+                    child: new Text("Yes"),
+                    onPressed: () {
+                      _deleteBarang(idx,itemCount);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ],
+                );
+            }
+                );
+            }
           );
-        },
-      );
     return flag;
   }
-  void _deleteBarang(int idx) {
+  void _deleteBarang(int idx,int count) {
     BarangManager bm = BarangManager();
-    if(_barangs[idx].qty==1){
+    var isiAkhir = _barangs[idx].qty-count;
+    if(isiAkhir==0){
       var id = _barangs[idx].id;
       bm.delBarang(id,txnID:_txnID);
       _barangs.removeAt(idx);
@@ -98,11 +116,8 @@ class _ListBarangState extends State<ListBarang> {
       });
     }else{
       var id = _barangs[idx].id;
-      _barangs[idx].removeBarang();
-      var qtyUpd = _barangs[idx].qty;
-      bm.updBarang(id,qtyUpd,txnID:_txnID);
+      bm.updBarang(id,isiAkhir,txnID:_txnID);
       setState(() {
-        
       });
     }
     _subtotal = _subtotalBaru();
@@ -161,7 +176,7 @@ class _ListBarangState extends State<ListBarang> {
       ),
       body:
         Center(
-        child: _barangs.isEmpty? Center(child: Text('Empty')) : ListView.separated(
+        child: _barangs.isEmpty? Center(child: Text('Cart is empty, start scanning an item. :D')) : ListView.separated(
           separatorBuilder: (context, index) => Divider(),
           itemCount: _barangs.length,
           itemBuilder: (context, int i){

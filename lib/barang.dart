@@ -25,8 +25,8 @@ class Barang{
   String getNama(){return this.nama;}
   int getQty(){return this.qty;}
   int getPrice(){return this.price;}
-  void removeBarang(){
-    this.qty--;
+  void removeBarang(count){
+    this.qty-=count;
     updPrice();
   }
   void addQty(){
