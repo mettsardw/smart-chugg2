@@ -105,6 +105,94 @@ class _ListBarangState extends State<ListBarang> {
           );
     return flag;
   }
+
+  bool _alertUpdBarang(int idx){
+    bool flag=false;
+    int itemCount=_barangs[idx].qty;
+    String cnt = itemCount.toString();
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          
+          return StatefulBuilder(
+            builder: (context,setState){
+              return AlertDialog(
+                title: new Text("Update the quantity of ${_barangs[idx].getNama()}."),
+                content: 
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('Please make sure to input the same quantity as the actual item amount in the cart.'),
+                      
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: ()=>setState((){
+                              if(itemCount>0){
+                                itemCount--;
+                                cnt = itemCount.toString();
+                                print('keminus ni');
+                              }
+                            })
+                          ),
+                        new Text(cnt),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: ()=>setState((){
+                              if(itemCount<_barangs[idx].qty){
+                                itemCount++;
+                                cnt = itemCount.toString();
+                                print('ketambah nih');
+                              }
+                            })
+                          )
+                      ],
+                      ),
+                    ],
+                  ),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Cancel"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  new FlatButton(
+                    color: Colors.lime,
+                    textColor: Colors.white,
+                    child: new Text("OK"),
+                    onPressed: () {
+                      _updQtyBarang(idx,itemCount);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ],
+                );
+            }
+                );
+            }
+          );
+    return flag;
+  }
+  void _updQtyBarang(int idx,int newqty) {
+    BarangManager bm = BarangManager();
+    if(newqty==0){
+      var id = _barangs[idx].id;
+      bm.delBarang(id,txnID:_txnID);
+      _barangs.removeAt(idx);
+      setState(() {
+      });
+    }else{
+      var id = _barangs[idx].id;
+      bm.updBarang(id,newqty,txnID:_txnID);
+      setState(() {
+      });
+    }
+    _subtotal = _subtotalBaru();
+  }
   void _deleteBarang(int idx,int count) {
     BarangManager bm = BarangManager();
     var isiAkhir = _barangs[idx].qty-count;
@@ -184,8 +272,8 @@ class _ListBarangState extends State<ListBarang> {
               title: Text(_barangs[i].nama),
               subtitle: Text(_barangs[i].infoPrice()),
               trailing: IconButton(
-                icon: Icon(Icons.delete_outline,color: Colors.red,),
-                onPressed: () => _alertDeleteBarang(i),
+                icon: Icon(Icons.edit,color: Theme.of(context).accentColor,),
+                onPressed: () => _alertUpdBarang(i),
               ),
             );
           },
